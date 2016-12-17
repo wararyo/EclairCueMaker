@@ -32,7 +32,7 @@ namespace wararyo.EclairCueMaker
 
             Texture2D tex = new Texture2D((int)rect.width, (int)rect.height);
             tex.alphaIsTransparency = true;
-            //tex.filterMode = FilterMode.Point;
+            tex.filterMode = FilterMode.Point;
 
             Color[] transparent = new Color[tex.width * tex.height];
             for (int i = 0;i < transparent.Length;i++)

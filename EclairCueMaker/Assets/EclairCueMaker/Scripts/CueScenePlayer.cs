@@ -4,9 +4,9 @@ using System.Collections;
 namespace wararyo.EclairCueMaker
 {
 
-    public class EventManager : MonoBehaviour
+    public class CueScenePlayer : MonoBehaviour
     {
-
+		public CueScene cueScene;
         public QueueTable timeline;
 
         private float time = 0;

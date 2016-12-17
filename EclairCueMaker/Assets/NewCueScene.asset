@@ -8,37 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e6f86f614fb1c45adba211fb8c94b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 04dd2b884f26a45868bcbd5da8c241b6, type: 3}
   m_Name: NewCueScene
   m_EditorClassIdentifier: 
   st: hoge
-  cueList:
-  - time: 0
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 102900000, guid: d2ec9c305738d9b45986d0fa2ee7b60b, type: 3}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-  - time: 0
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-  - time: 0
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+  cueList: []
