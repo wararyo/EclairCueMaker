@@ -1,2 +1,21 @@
-# EclairEventer
-CutScene Editor for Unity
+#EclairCueMaker
+
+## 概要
+EclairCueMakerは、アニメーション再生などの処理を時間差をつけて実行させることにより、UIアニメーションや、カットシーン作成などを行えるUnity用ツールです。タイムライン上で視覚的に編集することができます。
+
+## 注意点
+EclairCueMakerそのものでアニメーションを行うことはできません。
+## 用語の定義
+### Cue
+時間差をつけて実行される「合図」です。1つの`Cue`につき1つの`CueEvent`が関連付けられます。内部的には直前の`Cue`からの待機時間を保持することにより時間差をつけた合図を可能にしています。
+
+### CueEvent
+`Cue`が実行された際に起こる動作です。`CueEventBase`を継承したクラスか、その他任意のメソッドを保持します。
+
+### CueScene
+複数の`Cue`をまとめたものです。内部的にはただのCueの配列です。
+
+### CueSceneEditor
+CueSceneを作成するエディターです。`CueEditor`と省略されることがあります。
+### CueScenePlayer
+Unityシーン内の実際のゲームオブジェクトにアタッチして使うコンポーネントです。特定の`CueScene`を指定すると、それを再生します。
