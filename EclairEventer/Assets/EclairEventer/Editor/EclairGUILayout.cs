@@ -8,6 +8,7 @@ namespace wararyo.EclairEventer
     public class EclairGUILayout
     {
 
+        #region Ruler
         public static void Ruler (float startTime,float endTime,params GUILayoutOption[] options)
         {
             using (new EditorGUI.DisabledScope(true)) GUILayout.Button("", EditorStyles.toolbarButton,options);
@@ -75,6 +76,17 @@ namespace wararyo.EclairEventer
             }
             return tex;
         }
+
+        #endregion
+
+        #region TimelineTrack
+
+        public static void TimelineTrack(Track t)
+        {
+            
+        }
+
+        #endregion
 
         // Use this for initialization
         void Start()
