@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 using System.Collections;
 
 namespace wararyo.EclairCueMaker
@@ -9,10 +10,17 @@ namespace wararyo.EclairCueMaker
         private int tab = 0;
         private int paneWidth = 256;//timelineの左側の幅
 
+        private ReorderableList cueList;
+
         [MenuItem("Window/EclairCueEditor")]
         static void Open()
         {
             EditorWindow.GetWindow<CueEditor>("CueEditor");
+        }
+
+        void OnEnable()
+        {
+            //cueList = new ReorderableList(seria, Cue);
         }
 
         void OnGUI()
