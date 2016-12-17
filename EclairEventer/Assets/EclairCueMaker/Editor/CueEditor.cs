@@ -2,17 +2,17 @@
 using UnityEditor;
 using System.Collections;
 
-namespace wararyo.EclairEventer
+namespace wararyo.EclairCueMaker
 {
-    public class EventEditor : EditorWindow
+    public class CueEditor : EditorWindow
     {
         private int tab = 0;
         private int paneWidth = 256;//timelineの左側の幅
 
-        [MenuItem("Window/EclairEventEditor")]
+        [MenuItem("Window/EclairCueEditor")]
         static void Open()
         {
-            EditorWindow.GetWindow<EventEditor>("EventEditor");
+            EditorWindow.GetWindow<CueEditor>("CueEditor");
         }
 
         void OnGUI()

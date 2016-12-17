@@ -164,6 +164,7 @@ GameObject:
   - 33: {fileID: 421311440}
   - 65: {fileID: 421311439}
   - 23: {fileID: 421311438}
+  - 95: {fileID: 421311442}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -232,6 +233,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!95 &421311442
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 421311437}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 212c76e3c48e0c943a9ae326ed0b15a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &504824143
 GameObject:
   m_ObjectHideFlags: 0

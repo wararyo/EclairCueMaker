@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace wararyo.EclairEventer
+namespace wararyo.EclairCueMaker
 {
 
-    public class Event
+    public class Cue
     {
 
     }

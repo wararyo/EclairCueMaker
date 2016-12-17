@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace wararyo.EclairEventer
+namespace wararyo.EclairCueMaker
 {
 
-    public abstract class AnimationQueueBase : MonoBehaviour
+    public abstract class CueEventBase : MonoBehaviour
     {
 
         // Use this for initialization

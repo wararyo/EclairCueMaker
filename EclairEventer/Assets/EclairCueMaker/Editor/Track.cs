@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace wararyo.EclairEventer
+namespace wararyo.EclairCueMaker
 {
     /// <summary>
     /// EclairEventEditorのTimeline表示で使われる、一つのトラックを表すクラスです。
