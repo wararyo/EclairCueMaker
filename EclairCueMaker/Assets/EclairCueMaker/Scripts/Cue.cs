@@ -7,10 +7,12 @@ namespace wararyo.EclairCueMaker
     public class Cue
     {
         [SerializeField]
-        float time;
+        public float time;
 
         [SerializeField]
-        UnityEvent cueEvent;
+        public UnityEvent cueEvent;
+
+		public GameObject gameObject;
     }
 
 }
