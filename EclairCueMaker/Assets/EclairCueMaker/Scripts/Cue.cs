@@ -13,6 +13,15 @@ namespace wararyo.EclairCueMaker
         public UnityEvent cueEvent;
 
 		public GameObject gameObject;
+
+		public Cue(){
+
+		}
+
+		public Cue(Cue copy){
+			time = copy.time;
+			gameObject = copy.gameObject;
+		}
     }
 
 }

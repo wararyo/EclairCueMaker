@@ -25,6 +25,8 @@ namespace wararyo.EclairCueMaker
 			}
 		}
 
+		private SerializedProperty cueListSerialized;
+
 		private bool isEditable = false;
 
         private ReorderableList rawList;
@@ -43,27 +45,38 @@ namespace wararyo.EclairCueMaker
 			Selection.selectionChanged = OnSelectionChanged;
 			OnSelectionChanged ();
 
+			cueListSerialized = new SerializedObject (cueScene).FindProperty ("cueList");
+
 			rawList = new ReorderableList (cueScene.cueList,typeof(List<Cue>));
+			rawList.elementHeight = 38;
 
 			rawList.drawHeaderCallback = (rect) => {
 				EditorGUI.LabelField(rect, "CueList");
 			};
 
 			rawList.drawElementCallback = (rect, index, isActive, isFocused) => {
-				Cue cue = cueScene.cueList[index];
-				EditorGUI.BeginChangeCheck ();
+				//Cue cue = cueScene.cueList[index];
+				var cueSerialized = cueListSerialized.GetArrayElementAtIndex(index);
+				//EditorGUI.BeginChangeCheck ();
 
-				var time = EditorGUILayout.FloatField ("Time", cue.time);
-				var gameObject = EditorGUILayout.ObjectField(cue.gameObject,typeof(GameObject),true);
+				//var time = EditorGUILayout.FloatField ("Time", cue.time);
+				//var gameObject = EditorGUILayout.ObjectField(cue.gameObject,typeof(GameObject),true);
+				EditorGUI.PropertyField (rect, cueSerialized);
 
-				if (EditorGUI.EndChangeCheck ()) {
+				/*if (EditorGUI.EndChangeCheck ()) {
 
 					//変更前に Undo に登録
 					//Undo.RecordObject (cue, "Change Cue time");
 
 					//cue.time = time;
 
-				}
+				}*/
+			};
+
+			rawList.onAddCallback = (list) => {
+				cueScene.cueList.Insert(list.index + 1,new Cue(cueScene.cueList[list.index]));
+				cueListSerialized.arraySize++;
+				list.index++;
 			};
         }
 
@@ -129,8 +142,10 @@ namespace wararyo.EclairCueMaker
 
             else//Rawタブ
             {
+				cueListSerialized.serializedObject.Update ();
 				// リスト・配列の変更可能なリストの表示
 				rawList.DoLayoutList();
+				cueListSerialized.serializedObject.ApplyModifiedProperties();
             }
         }
 
