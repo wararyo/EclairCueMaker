@@ -37,14 +37,27 @@ namespace wararyo.EclairCueMaker
 
 				//各プロパティーの SerializedProperty を求める
 				var timeFieldProperty = property.FindPropertyRelative ("time");
-				var gameObjectProperty = property.FindPropertyRelative ("gameObjectID");
+				var gameObjectIDProperty = property.FindPropertyRelative ("gameObjectID");
+				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
 				//gameObjectProperty.
 
 				//GUIを配置
 				EditorGUI.LabelField (timeLabelRect, "Duration");
 				timeFieldProperty.floatValue = EditorGUI.FloatField (timeFieldRect, timeFieldProperty.floatValue);
-                GameObject go = (GameObject)EditorGUI.ObjectField(gameObjectRect, EditorUtility.InstanceIDToObject(gameObjectProperty.intValue), typeof(GameObject));
-                 if(go) gameObjectProperty.intValue = go.GetInstanceID();
+                GameObject go = (GameObject)EditorGUI.ObjectField(gameObjectRect, EditorUtility.InstanceIDToObject(gameObjectIDProperty.intValue), typeof(GameObject),true);
+                try
+                {
+                    if (gameObjectIDProperty.intValue != go.GetInstanceID())
+                    {
+                        gameObjectIDProperty.intValue = go.GetInstanceID();
+                        gameObjectProperty.objectReferenceValue = go;
+                    }
+                }
+                catch
+                {
+                    gameObjectIDProperty.intValue = -1;
+                    gameObjectProperty.objectReferenceValue = null;
+                }
                 //gameObjectProperty.objectReferenceValue = EditorGUI.ObjectField (gameObjectRect, gameObjectProperty.objectReferenceValue,typeof(GameObject),true);
                 //gameObjectProperty.
                 //go = (GameObject)EditorGUI.ObjectField(gameObjectRect, , typeof(GameObject));

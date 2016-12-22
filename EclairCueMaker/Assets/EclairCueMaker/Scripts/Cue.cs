@@ -15,6 +15,14 @@ namespace wararyo.EclairCueMaker
 		[SerializeField]
 		public int gameObjectID;
 
+        [SerializeField]
+        private GameObject gameObject;
+
+        public GameObject getGameObject()
+        {
+            return gameObject;
+        }
+
         /*public GameObject getGameObject()
         {
             return 
@@ -27,6 +35,7 @@ namespace wararyo.EclairCueMaker
 		public Cue(Cue copy){
 			time = copy.time;
 			gameObjectID = copy.gameObjectID;
+            gameObject = copy.gameObject;
 		}
     }
 
