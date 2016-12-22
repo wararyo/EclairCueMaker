@@ -14,33 +14,36 @@ namespace wararyo.EclairCueMaker
 
 				//各パーツの領域を指定
 				var timeLabelRect = new Rect (position) {
-					width = 128,
+					width = 56,
 					height = 16,
 					x = position.x + 2,
 					y = position.y + 2,
 				};
 				var timeFieldRect = new Rect (position) {
-					width = 128,
+					width = 56,
 					height = 16,
 					x = position.x + 2,
 					y = position.y + 19,
 				};
 
 				var gameObjectRect = new Rect (position) {
-					width = 128,
+					width = 156,
 					height = 16,
-					x = position.x + 132,
+					x = position.x + 64,
 					y = position.y + 2
 				};
 
 				//各プロパティーの SerializedProperty を求める
 				var timeFieldProperty = property.FindPropertyRelative ("time");
 				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
+				//gameObjectProperty.
 
 				//GUIを配置
 				EditorGUI.LabelField (timeLabelRect, "Duration");
-				EditorGUI.FloatField (timeFieldRect, timeFieldProperty.floatValue);
-				gameObjectProperty.objectReferenceValue = EditorGUI.ObjectField (gameObjectRect, gameObjectProperty.objectReferenceValue, typeof(GameObject), true);
+				timeFieldProperty.floatValue = EditorGUI.FloatField (timeFieldRect, timeFieldProperty.floatValue);
+				gameObjectProperty.objectReferenceValue = EditorGUI.ObjectField (gameObjectRect, gameObjectProperty.objectReferenceValue,typeof(GameObject),true);
+				//gameObjectProperty.
+				//EditorGUI.ObjectField(gameObjectRect, gameObjectProperty,typeof(GameObject),label);
 			}
 		}
 	}

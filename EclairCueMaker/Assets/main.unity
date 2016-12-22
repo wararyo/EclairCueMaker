@@ -379,4 +379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cueScene: {fileID: 11400000, guid: a176c260b04b1fc46aaebbc9dfd740ff, type: 2}
   timeline:
-    list: []
+    list:
+    - Key: 0
+      Value: {fileID: 0}
+    - Key: 0
+      Value: {fileID: 0}

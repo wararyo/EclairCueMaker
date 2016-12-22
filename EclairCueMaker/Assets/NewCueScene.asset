@@ -11,5 +11,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04dd2b884f26a45868bcbd5da8c241b6, type: 3}
   m_Name: NewCueScene
   m_EditorClassIdentifier: 
-  st: hoge
-  cueList: []
+  cueList:
+  - time: 1.1
+    cueEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    gameObject: {fileID: 0}
+  - time: 1.2
+    cueEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    gameObject: {fileID: 0}
+  - time: 2
+    cueEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    gameObject: {fileID: 0}
+  - time: -1
+    cueEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    gameObject: {fileID: 0}

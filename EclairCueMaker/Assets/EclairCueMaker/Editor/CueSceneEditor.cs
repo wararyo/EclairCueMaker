@@ -47,7 +47,7 @@ namespace wararyo.EclairCueMaker
 
 			cueListSerialized = new SerializedObject (cueScene).FindProperty ("cueList");
 
-			rawList = new ReorderableList (cueScene.cueList,typeof(List<Cue>));
+			rawList = new ReorderableList (cueListSerialized.serializedObject,cueListSerialized);
 			rawList.elementHeight = 38;
 
 			rawList.drawHeaderCallback = (rect) => {

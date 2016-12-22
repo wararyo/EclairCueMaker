@@ -12,6 +12,7 @@ namespace wararyo.EclairCueMaker
         [SerializeField]
         public UnityEvent cueEvent;
 
+		[SerializeField]
 		public GameObject gameObject;
 
 		public Cue(){
