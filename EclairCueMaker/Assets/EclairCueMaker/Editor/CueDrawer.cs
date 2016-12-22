@@ -7,6 +7,8 @@ namespace wararyo.EclairCueMaker
 	[CustomPropertyDrawer(typeof(Cue))]
 	public class CueDrawer : PropertyDrawer
 	{
+        //GameObject go;
+
 		public override void OnGUI (Rect position, SerializedProperty property, GUIContent label)
 		{
 			//base.OnGUI (position, property, label);
@@ -35,14 +37,17 @@ namespace wararyo.EclairCueMaker
 
 				//各プロパティーの SerializedProperty を求める
 				var timeFieldProperty = property.FindPropertyRelative ("time");
-				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
+				var gameObjectProperty = property.FindPropertyRelative ("gameObjectID");
 				//gameObjectProperty.
 
 				//GUIを配置
 				EditorGUI.LabelField (timeLabelRect, "Duration");
 				timeFieldProperty.floatValue = EditorGUI.FloatField (timeFieldRect, timeFieldProperty.floatValue);
-				gameObjectProperty.objectReferenceValue = EditorGUI.ObjectField (gameObjectRect, gameObjectProperty.objectReferenceValue,typeof(GameObject),true);
-				//gameObjectProperty.
+                GameObject go = (GameObject)EditorGUI.ObjectField(gameObjectRect, EditorUtility.InstanceIDToObject(gameObjectProperty.intValue), typeof(GameObject));
+                 if(go) gameObjectProperty.intValue = go.GetInstanceID();
+                //gameObjectProperty.objectReferenceValue = EditorGUI.ObjectField (gameObjectRect, gameObjectProperty.objectReferenceValue,typeof(GameObject),true);
+                //gameObjectProperty.
+                //go = (GameObject)EditorGUI.ObjectField(gameObjectRect, , typeof(GameObject));
 				//EditorGUI.ObjectField(gameObjectRect, gameObjectProperty,typeof(GameObject),label);
 			}
 		}

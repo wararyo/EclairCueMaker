@@ -13,7 +13,12 @@ namespace wararyo.EclairCueMaker
         public UnityEvent cueEvent;
 
 		[SerializeField]
-		public GameObject gameObject;
+		public int gameObjectID;
+
+        /*public GameObject getGameObject()
+        {
+            return 
+        }*/
 
 		public Cue(){
 
@@ -21,7 +26,7 @@ namespace wararyo.EclairCueMaker
 
 		public Cue(Cue copy){
 			time = copy.time;
-			gameObject = copy.gameObject;
+			gameObjectID = copy.gameObjectID;
 		}
     }
 

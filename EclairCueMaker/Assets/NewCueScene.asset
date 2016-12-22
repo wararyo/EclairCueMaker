@@ -12,55 +12,5 @@ MonoBehaviour:
   m_Name: NewCueScene
   m_EditorClassIdentifier: 
   attachedSceneGUID: 
-  cueList:
-  - time: 1.2
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 0}
-  - time: 1.1
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 0}
-  - time: 2
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
-      type: 2}
-  - time: -1
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 0}
-  - time: -1
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 0}
-  - time: -1
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 0}
-  - time: -1
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObject: {fileID: 0}
+  cueList: []
   Version: 1

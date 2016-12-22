@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861d0d71e8440ae458f2dc580331d815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cueScene: {fileID: 11400000, guid: a176c260b04b1fc46aaebbc9dfd740ff, type: 2}
+  cueScene: {fileID: 11400000, guid: b53c143dac55629409761466a2c5f8ca, type: 2}
   timeline:
     list:
     - Key: 0

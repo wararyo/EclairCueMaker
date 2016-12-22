@@ -21,7 +21,7 @@ namespace wararyo.EclairCueMaker
 			}
 			set{
 				cueScene_ = value;
-				OnCueSceneChanged ();
+				if(value) OnCueSceneChanged ();
 			}
 		}
 
@@ -44,40 +44,6 @@ namespace wararyo.EclairCueMaker
             //cueList = new ReorderableList(seria, Cue);
 			Selection.selectionChanged = OnSelectionChanged;
 			OnSelectionChanged ();
-
-			cueListSerialized = new SerializedObject (cueScene).FindProperty ("cueList");
-
-			rawList = new ReorderableList (cueListSerialized.serializedObject,cueListSerialized);
-			rawList.elementHeight = 38;
-
-			rawList.drawHeaderCallback = (rect) => {
-				EditorGUI.LabelField(rect, "CueList");
-			};
-
-			rawList.drawElementCallback = (rect, index, isActive, isFocused) => {
-				//Cue cue = cueScene.cueList[index];
-				var cueSerialized = cueListSerialized.GetArrayElementAtIndex(index);
-				//EditorGUI.BeginChangeCheck ();
-
-				//var time = EditorGUILayout.FloatField ("Time", cue.time);
-				//var gameObject = EditorGUILayout.ObjectField(cue.gameObject,typeof(GameObject),true);
-				EditorGUI.PropertyField (rect, cueSerialized);
-
-				/*if (EditorGUI.EndChangeCheck ()) {
-
-					//変更前に Undo に登録
-					//Undo.RecordObject (cue, "Change Cue time");
-
-					//cue.time = time;
-
-				}*/
-			};
-
-			rawList.onAddCallback = (list) => {
-				cueScene.cueList.Insert(list.index + 1,new Cue(cueScene.cueList[list.index]));
-				cueListSerialized.arraySize++;
-				list.index++;
-			};
         }
 
 		void OnSelectionChanged(){
@@ -85,7 +51,7 @@ namespace wararyo.EclairCueMaker
 			foreach(GameObject go in Selection.gameObjects)
 			{
 				if (go.activeInHierarchy && go.GetComponent<CueScenePlayer>()) {
-					cueScene = go.GetComponent<CueScenePlayer> ().cueScene;
+					cueScene = go.GetComponent<CueScenePlayer> ().cueScene;//OnCueSceneChangedが実行されるね
 					if (cueScene) {
 						isEditable = true;
 						sceneName = go.name + "#" + cueScene.name;
@@ -101,8 +67,33 @@ namespace wararyo.EclairCueMaker
 		}
 
 		void OnCueSceneChanged(){
+            cueListSerialized = new SerializedObject(cueScene).FindProperty("cueList");
 
-		}
+            rawList = new ReorderableList(cueListSerialized.serializedObject, cueListSerialized);
+            rawList.elementHeight = 38;
+
+            rawList.drawHeaderCallback = (rect) => {
+                EditorGUI.LabelField(rect, "CueList");
+            };
+
+            rawList.drawElementCallback = (rect, index, isActive, isFocused) => {
+                var cueSerialized = cueListSerialized.GetArrayElementAtIndex(index);
+                EditorGUI.PropertyField(rect, cueSerialized,true);
+            };
+
+            rawList.onAddCallback = (list) => {
+                if (list.count == 0 || list.index < 0)
+                {
+                    cueScene.cueList.Add(new Cue());
+                    cueListSerialized.arraySize++;
+                }
+                else {
+                    cueScene.cueList.Insert(list.index + 1, new Cue(cueScene.cueList[list.index]));
+                    cueListSerialized.arraySize++;
+                    list.index++;
+                }
+            };
+        }
 
         void OnGUI()
         {
