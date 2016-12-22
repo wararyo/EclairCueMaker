@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class test : MonoBehaviour {
+
+    public UnityAction action;
 
 	// Use this for initialization
 	void Start () {
@@ -11,4 +14,9 @@ public class test : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void hogehoge()
+    {
+
+    }
 }
