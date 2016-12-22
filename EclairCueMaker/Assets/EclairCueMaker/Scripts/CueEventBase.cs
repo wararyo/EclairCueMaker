@@ -21,9 +21,6 @@ namespace wararyo.EclairCueMaker
 
         public abstract void Queue();
 
-        public abstract void Queue<T>(T t)
-        {
-
-        }
+        public abstract void Queue<T>(T t);
     }
 }

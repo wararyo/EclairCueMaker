@@ -8,6 +8,7 @@ namespace wararyo.EclairCueMaker
     [CustomEditor(typeof(CueScene))]
     public class CueSceneInspector : Editor
     {
+        CueScene cueScene = null;
 
 		[MenuItem("Assets/Create/EclairCueScene")]
 		public static void CreateCueSceneInstance()
@@ -28,14 +29,19 @@ namespace wararyo.EclairCueMaker
 			return whenNone;
 		}
 
+        void OnEnable()
+        {
+            cueScene = (CueScene)target;
+        }
+
 		const string message = 
 			"Animatorなどと同じように、シーン上のゲームオブジェクトにCueScenePlayerをアタッチしてこのCueSceneをセット、その後アタッチしたゲームオブジェクトを選択することで編集可能になります。";
         public override void OnInspectorGUI()
         {
             //base.OnInspectorGUI();
 			EditorGUILayout.LabelField("EclairCueMaker CueScene");
-			EditorGUILayout.LabelField ("CueCount:", "8");
-			EditorGUILayout.LabelField ("Duration:", "10.0s");
+			EditorGUILayout.LabelField ("CueCount:", cueScene.Count + "");
+			EditorGUILayout.LabelField ("Duration:", cueScene.Length + "s");
 			EditorGUILayout.HelpBox (message, MessageType.Info);
         }
     }
