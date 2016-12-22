@@ -3,8 +3,11 @@ using System.Collections.Generic;
 
 namespace wararyo.EclairCueMaker {
 
+    [CreateAssetMenu(fileName ="NewCueScene.asset",menuName ="EclairCueScene",order = 370)]
 	public class CueScene : ScriptableObject
 	{
+        [SerializeField]
+        public string attachedSceneGUID = "";
 
 		[SerializeField]
 		public List<Cue> cueList = new List<Cue>();
@@ -13,7 +16,8 @@ namespace wararyo.EclairCueMaker {
 			get{
 				float length = 0;
 				foreach (Cue c in cueList) {
-					length += c.time;
+                    if(c.time > 0)
+					    length += c.time;
 				}
 				return length;
 			}
@@ -25,6 +29,7 @@ namespace wararyo.EclairCueMaker {
 			}
 		}
 
+        [SerializeField]
 		private int Version = 1;
 
 		public void Awake(){

@@ -9,9 +9,9 @@ namespace wararyo.EclairCueMaker
     {
 
         #region Ruler
-        public static void Ruler (float startTime,float endTime,params GUILayoutOption[] options)
+        public static void Ruler(float startTime, float endTime, params GUILayoutOption[] options)
         {
-            using (new EditorGUI.DisabledScope(true)) GUILayout.Button("", EditorStyles.toolbarButton,options);
+            using (new EditorGUI.DisabledScope(true)) GUILayout.Button("", EditorStyles.toolbarButton, options);
             //EditorGUILayout.LabelField("", "", EditorStyles.toolbar, options);
             var rect = GUILayoutUtility.GetLastRect();//既存のGUILayoutを実行しRectだけ盗む
             EclairGUILayout.Ruler(rect, startTime, endTime);
@@ -24,7 +24,7 @@ namespace wararyo.EclairCueMaker
             EclairGUILayout.Ruler(rect, startTime, endTime);
         }
 
-        public static void Ruler (Rect rect,float startTime, float endTime)
+        public static void Ruler(Rect rect, float startTime, float endTime)
         {
             if (rect.height == 1.0f) return;
 
@@ -35,14 +35,14 @@ namespace wararyo.EclairCueMaker
             tex.filterMode = FilterMode.Point;
 
             Color[] transparent = new Color[tex.width * tex.height];
-            for (int i = 0;i < transparent.Length;i++)
+            for (int i = 0; i < transparent.Length; i++)
             {
                 transparent[i] = new Color(0, 0, 0, 0);
             }
-            tex.SetPixels(0, 0, tex.width, tex.height,transparent);
+            tex.SetPixels(0, 0, tex.width, tex.height, transparent);
 
             //目盛りと数字の描画開始
-            for(float i=((int)(startTime*10))/(float)10;i < endTime; i += 0.1f)//目盛り単位0.1秒
+            for (float i = ((int)(startTime * 10)) / (float)10; i < endTime; i += 0.1f)//目盛り単位0.1秒
             {
                 i = (int)(i * 10 + 0.5f) / (float)10;
                 if (i < startTime) continue;
@@ -69,7 +69,7 @@ namespace wararyo.EclairCueMaker
         /// <param name="height"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        static Texture2D drawScale(Texture2D tex,int x,int height,Color color)
+        static Texture2D drawScale(Texture2D tex, int x, int height, Color color)
         {
             for (int i = 0; i < height; i++) {
                 tex.SetPixel(x, i, color);
@@ -83,7 +83,15 @@ namespace wararyo.EclairCueMaker
 
         public static void TimelineTrack(Track t)
         {
-            
+
+        }
+
+        #endregion
+
+        #region HierarchyGameObjectField
+
+        public static void HierarchyGameObjectField(Rect rect, GameObject go){
+
         }
 
         #endregion

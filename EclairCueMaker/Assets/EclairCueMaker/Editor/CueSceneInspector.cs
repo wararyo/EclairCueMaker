@@ -10,7 +10,7 @@ namespace wararyo.EclairCueMaker
     {
         CueScene cueScene = null;
 
-		[MenuItem("Assets/Create/EclairCueScene")]
+		//[MenuItem("Assets/Create/EclairCueScene")]//CueScene.csにてCreateAssetMenuAttributeを使う方法に変更
 		public static void CreateCueSceneInstance()
 		{
 			CueScene cs = CreateInstance<CueScene>();
@@ -40,6 +40,8 @@ namespace wararyo.EclairCueMaker
         {
             //base.OnInspectorGUI();
 			EditorGUILayout.LabelField("EclairCueMaker CueScene");
+            string sceneGUID = cueScene.attachedSceneGUID;
+            EditorGUILayout.LabelField("Attached in " + (sceneGUID == "" ? "Nothing" : System.IO.Path.GetFileNameWithoutExtension( AssetDatabase.GUIDToAssetPath(sceneGUID))));
 			EditorGUILayout.LabelField ("CueCount:", cueScene.Count + "");
 			EditorGUILayout.LabelField ("Duration:", cueScene.Length + "s");
 			EditorGUILayout.HelpBox (message, MessageType.Info);
