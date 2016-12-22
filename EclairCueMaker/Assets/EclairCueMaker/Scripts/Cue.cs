@@ -12,9 +12,11 @@ namespace wararyo.EclairCueMaker
         [SerializeField]
         public UnityEvent cueEvent;
 
+        //CueDrawerにて変更
 		[SerializeField]
-		public int gameObjectID;
+		private int gameObjectID;
 
+        //CueDrawerにて変更
         [SerializeField]
         private GameObject gameObject;
 
