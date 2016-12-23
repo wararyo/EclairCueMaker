@@ -14,19 +14,11 @@ MonoBehaviour:
   attachedSceneGUID: 
   cueList:
   - time: 0
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObjectID: 8838
+    gameObjectID: 8814
     gameObject: {fileID: 0}
+    cueEventName: 
   - time: 2
-    cueEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-    gameObjectID: 8838
+    gameObjectID: 8814
     gameObject: {fileID: 0}
+    cueEventName: 
   Version: 1
