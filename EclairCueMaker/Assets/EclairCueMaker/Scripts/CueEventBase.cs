@@ -16,6 +16,11 @@ namespace wararyo.EclairCueMaker
             get;
         }
 
+        public abstract string EventID
+        {
+            get;
+        }
+
         public abstract void Cue<T>(T param);
     }
 }

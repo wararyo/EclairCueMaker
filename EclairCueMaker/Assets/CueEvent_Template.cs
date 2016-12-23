@@ -5,13 +5,7 @@ using System;
 
 public class CueEvent_Template : CueEventBase {
 
-	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
 	
 	}
 
@@ -23,6 +17,20 @@ public class CueEvent_Template : CueEventBase {
         get
         {
             return "**Input name of this CueEvent here**";
+        }
+    }
+
+    /// <summary>
+    /// CueEvent同士を区別するときに用いる識別子です。
+    /// 他と被らない一意的な文字列である必要があります。
+    /// 適当にキーボードをガチャガチャしてください。
+    /// このCueEventが何らかのCueから参照されているときにこの値を変更した場合、動作は保証されません。
+    /// </summary>
+    public override string EventID
+    {
+        get
+        {
+            return "324a94shtj65y5u4l";
         }
     }
 

@@ -41,7 +41,6 @@ namespace wararyo.EclairCueMaker
 				var gameObjectIDProperty = property.FindPropertyRelative ("gameObjectID");
 				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
                 var cueEventNameProperty = property.FindPropertyRelative("cueEventName");
-                var cueEventParamTypeProperty = property.FindPropertyRelative("paramType");
                 var cueEventParamProperty = property.FindPropertyRelative("parameter");
 
                 //GUIを配置
