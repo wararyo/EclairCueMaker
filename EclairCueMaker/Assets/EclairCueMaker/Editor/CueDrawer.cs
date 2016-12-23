@@ -8,6 +8,7 @@ namespace wararyo.EclairCueMaker
 	public class CueDrawer : PropertyDrawer
 	{
         //GameObject go;
+        private string[] cueEventList = null;
 
 		public override void OnGUI (Rect position, SerializedProperty property, GUIContent label)
 		{
@@ -39,10 +40,12 @@ namespace wararyo.EclairCueMaker
 				var timeFieldProperty = property.FindPropertyRelative ("time");
 				var gameObjectIDProperty = property.FindPropertyRelative ("gameObjectID");
 				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
-				//gameObjectProperty.
+                var cueEventNameProperty = property.FindPropertyRelative("cueEventName");
+                var cueEventParamTypeProperty = property.FindPropertyRelative("paramType");
+                var cueEventParamProperty = property.FindPropertyRelative("parameter");
 
-				//GUIを配置
-				EditorGUI.LabelField (timeLabelRect, "Duration");
+                //GUIを配置
+                EditorGUI.LabelField (timeLabelRect, "Duration");
 				timeFieldProperty.floatValue = EditorGUI.FloatField (timeFieldRect, timeFieldProperty.floatValue);
                 GameObject go = (GameObject)EditorGUI.ObjectField(gameObjectRect, EditorUtility.InstanceIDToObject(gameObjectIDProperty.intValue), typeof(GameObject),true);
                 try
@@ -58,11 +61,15 @@ namespace wararyo.EclairCueMaker
                     gameObjectIDProperty.intValue = -1;
                     gameObjectProperty.objectReferenceValue = null;
                 }
-                //gameObjectProperty.objectReferenceValue = EditorGUI.ObjectField (gameObjectRect, gameObjectProperty.objectReferenceValue,typeof(GameObject),true);
-                //gameObjectProperty.
-                //go = (GameObject)EditorGUI.ObjectField(gameObjectRect, , typeof(GameObject));
-				//EditorGUI.ObjectField(gameObjectRect, gameObjectProperty,typeof(GameObject),label);
 			}
 		}
+
+        public static string[] getCueEvents(GameObject gameObject)
+        {
+            List<string> list = new List<string>();
+            foreach (CueEventBase c in gameObject.GetComponents<CueEventBase>()) ;
+
+            return list.ToArray();
+        }
 	}
 }

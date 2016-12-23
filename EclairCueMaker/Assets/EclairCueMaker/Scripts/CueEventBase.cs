@@ -6,21 +6,16 @@ namespace wararyo.EclairCueMaker
 
     public abstract class CueEventBase : MonoBehaviour
     {
-
-        // Use this for initialization
-        void Start()
+        public abstract string EventName
         {
-
+            get;
         }
 
-        // Update is called once per frame
-        void Update()
+        public abstract System.Type ParamType
         {
-
+            get;
         }
 
-        public abstract void Queue();
-
-        public abstract void Queue<T>(T t);
+        public abstract void Cue<T>(T param);
     }
 }

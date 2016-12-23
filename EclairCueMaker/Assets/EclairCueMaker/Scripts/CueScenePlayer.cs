@@ -52,14 +52,14 @@ namespace wararyo.EclairCueMaker
             {
                 yield return new WaitForSeconds(q.Key);
                 Debug.Log("Queue:" + q.Value.ToString());
-                if (q.Value != null) q.Value.GetComponent<CueEventBase>().Queue();
+                //if (q.Value != null) q.Value.GetComponent<CueEventBase>().Queue();
                 Cursor++;
             }
         }
 
         public void Invoke()
         {
-            if (timeline.GetList()[cursor].Value != null) timeline.GetList()[cursor].Value.GetComponents<CueEventBase>()[0].Queue();//抽象クラス最高！
+            //if (timeline.GetList()[cursor].Value != null) timeline.GetList()[cursor].Value.GetComponents<CueEventBase>()[0].Queue();//抽象クラス最高！
             time = 0;
             Cursor++;
         }
