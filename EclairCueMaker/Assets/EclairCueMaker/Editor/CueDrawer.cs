@@ -56,7 +56,7 @@ namespace wararyo.EclairCueMaker
                 var timeFieldProperty = property.FindPropertyRelative ("time");
 				var gameObjectIDProperty = property.FindPropertyRelative ("gameObjectID");
 				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
-                var cueEventNameProperty = property.FindPropertyRelative("cueEventName");
+                var cueEventIDProperty = property.FindPropertyRelative("cueEventID");
                 var cueEventParamProperty = property.FindPropertyRelative("parameter");
 
                 //GUIを配置
@@ -72,8 +72,6 @@ namespace wararyo.EclairCueMaker
                         gameObjectProperty.objectReferenceValue = go;
                     }
                     cueEventList = go.GetComponents<CueEventBase>();
-                    EditorGUI.Popup(cueEventPopupRect, 0, getCueEventsStrings(cueEventList));
-                    CueEventParamGUI(cueEventParamRect,"",typeof(string));
                 }
                 catch
                 {
@@ -81,24 +79,26 @@ namespace wararyo.EclairCueMaker
                     gameObjectProperty.objectReferenceValue = null;
                     cueEventList = null;
                 }
-
-
+				if (cueEventList != null) {
+					if (cueEventList.Length != 0) {
+						cueEventIDProperty.stringValue = cueEventList [EditorGUI.Popup (cueEventPopupRect, getIndexFromID (cueEventList, cueEventIDProperty.stringValue), getCueEventsStrings (cueEventList))].EventID;
+						CueEventParamGUI (cueEventParamRect, cueEventParamProperty, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
+					}
+				}
 			}
 		}
 
-        private object CueEventParamGUI(Rect rect,object param,System.Type type)
+		private void CueEventParamGUI(Rect rect,SerializedProperty prop,System.Type type)
         {
             if (type.Equals(typeof(string)))
             {
-                return EditorGUI.TextField(rect, (string)param);
+				try {prop.stringValue =  EditorGUI.TextField(rect, prop.stringValue);}
+				catch {prop.stringValue = "";}
             }
             else if (type.IsSubclassOf(typeof(Object)))
             {
-                return EditorGUI.ObjectField(rect, (Object)param, type);//TODO:このままじゃ多分シーン上のオブジェクトを指定できない
-            }
-            else
-            {
-                return null;
+				try{prop.objectReferenceValue = EditorGUI.ObjectField(rect, prop.objectReferenceValue, type);}//TODO:このままじゃ多分シーン上のオブジェクトを指定できない
+				catch{prop.objectReferenceValue = null;}
             }
         }
 
@@ -113,6 +113,15 @@ namespace wararyo.EclairCueMaker
             }
             return st;
         }
-        public static int getIndexFromStrings(string[] sts) { return 0; }
+		public static int getIndexFromID(CueEventBase[] events,string ID) {
+			if (events == null) return 0;
+
+			for (int i = 0; i < events.Length; i++) {
+				if (events [i].EventID == ID) {
+					return i;
+				}
+			}
+			return 0;
+		}
 	}
 }

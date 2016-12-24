@@ -14,11 +14,11 @@ MonoBehaviour:
   attachedSceneGUID: 
   cueList:
   - time: 0
-    gameObjectID: 8814
+    gameObjectID: 8896
     gameObject: {fileID: 0}
-    cueEventName: 
-  - time: 2
-    gameObjectID: 8814
+    cueEventID: 324a94shtj65y5u4l
+  - time: 0
+    gameObjectID: -1
     gameObject: {fileID: 0}
-    cueEventName: 
+    cueEventID: 
   Version: 1

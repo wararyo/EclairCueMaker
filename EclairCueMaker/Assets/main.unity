@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692492, g: 0.4967869, b: 0.57508546, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692504, g: 0.4967869, b: 0.57508504, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -166,6 +166,7 @@ GameObject:
   - 23: {fileID: 421311438}
   - 95: {fileID: 421311442}
   - 114: {fileID: 421311443}
+  - 114: {fileID: 421311444}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -260,6 +261,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9938a92083f74c34fb60d8d596078e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &421311444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 421311437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dcd1fe5dff3a48e8a783c9e65a87b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &504824143
@@ -389,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861d0d71e8440ae458f2dc580331d815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cueScene: {fileID: 11400000, guid: b53c143dac55629409761466a2c5f8ca, type: 2}
+  cueScene: {fileID: 11400000, guid: 7c75fd316d7ce42a6ad0b85f06716dfa, type: 2}
   timeline:
     list:
     - Key: 0

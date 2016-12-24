@@ -18,7 +18,7 @@ namespace wararyo.EclairCueMaker
         private GameObject gameObject;
 
         [SerializeField]
-        private string cueEventName;
+        private string cueEventID;
 
         //[SerializeField]
         //private System.Type paramType;
