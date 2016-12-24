@@ -23,7 +23,11 @@ namespace wararyo.EclairCueMaker
         //[SerializeField]
         //private System.Type paramType;
         [SerializeField]
-        private object parameter;
+        private string parameter;
+
+		//CueEventのTypeがObject型だった時のみ用いられる
+		[SerializeField]
+		private Object paramObject;
 
 
 

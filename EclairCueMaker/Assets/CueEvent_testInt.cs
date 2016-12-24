@@ -3,7 +3,7 @@ using System.Collections;
 using wararyo.EclairCueMaker;
 using System;
 
-public class CueEvent_Template : CueEventBase {
+public class CueEvent_testInt : CueEventBase {
 
 	void Start () {
 	
@@ -16,7 +16,7 @@ public class CueEvent_Template : CueEventBase {
     {
         get
         {
-            return "**Input name of this CueEvent here**";
+            return "TestInt";
         }
     }
 
@@ -30,7 +30,7 @@ public class CueEvent_Template : CueEventBase {
     {
         get
         {
-            return "324a94shtj65y5u4l";
+            return "n7887g9fg87g90ha98";
         }
     }
 
@@ -44,7 +44,7 @@ public class CueEvent_Template : CueEventBase {
     {
         get
         {
-            return typeof(void);
+            return typeof(int);
         }
     }
 

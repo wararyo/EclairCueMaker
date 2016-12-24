@@ -58,6 +58,7 @@ namespace wararyo.EclairCueMaker
 				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
                 var cueEventIDProperty = property.FindPropertyRelative("cueEventID");
                 var cueEventParamProperty = property.FindPropertyRelative("parameter");
+				var cueEventParamObjectProperty = property.FindPropertyRelative ("paramObject");
 
                 //GUIを配置
                 EditorGUI.LabelField (timeLabelRect, "Duration");
@@ -82,24 +83,50 @@ namespace wararyo.EclairCueMaker
 				if (cueEventList != null) {
 					if (cueEventList.Length != 0) {
 						cueEventIDProperty.stringValue = cueEventList [EditorGUI.Popup (cueEventPopupRect, getIndexFromID (cueEventList, cueEventIDProperty.stringValue), getCueEventsStrings (cueEventList))].EventID;
-						CueEventParamGUI (cueEventParamRect, cueEventParamProperty, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
+						string param = CueEventParamGUI (cueEventParamRect, cueEventParamProperty.stringValue, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
+						if(cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType.IsSubclassOf(typeof(Object))){
+							if (param != cueEventParamProperty.stringValue) {
+								cueEventParamObjectProperty.objectReferenceValue = EditorUtility.InstanceIDToObject (int.Parse (param));
+							}
+						}
+						cueEventParamProperty.stringValue = param;
 					}
 				}
 			}
 		}
 
-		private void CueEventParamGUI(Rect rect,SerializedProperty prop,System.Type type)
+		private string CueEventParamGUI(Rect rect,string param,System.Type type)
         {
-            if (type.Equals(typeof(string)))
-            {
-				try {prop.stringValue =  EditorGUI.TextField(rect, prop.stringValue);}
-				catch {prop.stringValue = "";}
-            }
+			if (type.Equals (typeof(void))) {
+				return "";
+			} else if (type.Equals (typeof(string))) {
+				try {
+					return EditorGUI.TextField (rect, param);
+				} catch {
+					return EditorGUI.TextField (rect, "");
+				}
+			} else if (type.Equals (typeof(int))) {
+				try {
+					return EditorGUI.IntField (rect, int.Parse (param)).ToString ();
+				} catch {
+					return EditorGUI.IntField (rect, 0).ToString ();
+				}
+			} else if (type.Equals (typeof(float))) {
+				try { return EditorGUI.FloatField(rect, float.Parse(param)).ToString();}
+				catch{
+					return EditorGUI.FloatField (rect, 0).ToString();
+				}
+			}
             else if (type.IsSubclassOf(typeof(Object)))
             {
-				try{prop.objectReferenceValue = EditorGUI.ObjectField(rect, prop.objectReferenceValue, type);}//TODO:このままじゃ多分シーン上のオブジェクトを指定できない
-				catch{prop.objectReferenceValue = null;}
+				try{
+					return EditorGUI.ObjectField(rect, EditorUtility.InstanceIDToObject(int.Parse(param)), typeof(GameObject),true).GetInstanceID().ToString();}
+				catch{
+					EditorGUI.ObjectField(rect, null, typeof(GameObject),true);
+					return "0";
+				}
             }
+			return "";
         }
 
         public static string[] getCueEventsStrings(CueEventBase[] events)
