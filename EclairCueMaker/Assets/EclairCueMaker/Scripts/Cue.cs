@@ -23,7 +23,7 @@ namespace wararyo.EclairCueMaker
         //[SerializeField]
         //private System.Type paramType;
         [SerializeField]
-        private object parameter;
+        private Object parameter;
 
 
 

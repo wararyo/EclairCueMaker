@@ -82,24 +82,25 @@ namespace wararyo.EclairCueMaker
 				if (cueEventList != null) {
 					if (cueEventList.Length != 0) {
 						cueEventIDProperty.stringValue = cueEventList [EditorGUI.Popup (cueEventPopupRect, getIndexFromID (cueEventList, cueEventIDProperty.stringValue), getCueEventsStrings (cueEventList))].EventID;
-						CueEventParamGUI (cueEventParamRect, cueEventParamProperty, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
+						cueEventParamProperty.objectReferenceValue = CueEventParamGUI (cueEventParamRect, cueEventParamProperty.objectReferenceValue, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
 					}
 				}
 			}
 		}
 
-		private void CueEventParamGUI(Rect rect,SerializedProperty prop,System.Type type)
+		private Object CueEventParamGUI(Rect rect,Object param,System.Type type)
         {
             if (type.Equals(typeof(string)))
             {
-				try {prop.stringValue =  EditorGUI.TextField(rect, prop.stringValue);}
-				catch {prop.stringValue = "";}
+				try {return new CueEventParamString(EditorGUI.TextField(rect, ((CueEventParamString)param).value));}
+				catch {return new CueEventParamString(EditorGUI.TextField(rect, ""));}
             }
             else if (type.IsSubclassOf(typeof(Object)))
             {
-				try{prop.objectReferenceValue = EditorGUI.ObjectField(rect, prop.objectReferenceValue, type);}//TODO:このままじゃ多分シーン上のオブジェクトを指定できない
-				catch{prop.objectReferenceValue = null;}
+				try{return EditorGUI.ObjectField(rect, param, type);}//TODO:このままじゃ多分シーン上のオブジェクトを指定できない
+				catch{return EditorGUI.ObjectField(rect, null, type);}
             }
+			return null;
         }
 
         public static string[] getCueEventsStrings(CueEventBase[] events)

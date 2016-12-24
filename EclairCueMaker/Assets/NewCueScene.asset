@@ -16,9 +16,6 @@ MonoBehaviour:
   - time: 0
     gameObjectID: 8896
     gameObject: {fileID: 0}
-    cueEventID: 324a94shtj65y5u4l
-  - time: 0
-    gameObjectID: -1
-    gameObject: {fileID: 0}
-    cueEventID: 
+    cueEventID: 79k8hvjh2gv34h3
+    parameter: {fileID: 0}
   Version: 1
