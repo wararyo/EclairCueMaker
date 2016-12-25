@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/wararyo/EclairCueMaker/master/Images/IconHiDPI.svg" width=48px /> EclairCueMaker
+# <img src="Images/IconHiDPI.png" width=48px /> EclairCueMaker
 
 ## 概要
 EclairCueMakerは、アニメーション再生などの処理を時間差をつけて実行させることにより、UIアニメーションや、カットシーン作成などを行えるUnity用ツールです。タイムライン上で視覚的に編集することができます。
