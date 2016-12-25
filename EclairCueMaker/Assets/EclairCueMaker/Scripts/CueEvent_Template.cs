@@ -10,7 +10,7 @@ public class CueEvent_Template : CueEventBase {
 	}
 
     /// <summary>
-    /// CueSceneEditorのCue編集画面に置いてCueEventリストに表示される文字列です。
+    /// CueSceneEditorのCue編集画面においてCueEventリストに表示される文字列です。
     /// </summary>
     public override string EventName
     {
@@ -35,10 +35,13 @@ public class CueEvent_Template : CueEventBase {
     }
 
     /// <summary>
-    /// CueSceneEditorのCue編集画面でこのCueEventを指定したとき、ParamTypeで指定した型に応じて引数編集画面が表示されます。
-    /// よってCueScenePlayerがCueメソッドを実行するとき、引数paramにはParamTypeで指定した型の変数が入ります。
+    /// CueSceneEditorのCue編集画面でこのCueEventを指定したとき、ParamTypeで指定した型に応じて引数編集GUIが表示されます。
+    /// CueScenePlayerがCueメソッドを実行するとき、引数paramにはParamTypeで指定した型の変数が入ります。
     /// 現在サポートしているParamTypeは以下の通りです。
-    /// string int float GameObjectなどのUnityEngine.Object継承型
+    /// string
+    /// int
+    /// float
+    /// GameObjectなどのUnityEngine.Object継承型
     /// </summary>
     public override Type ParamType
     {

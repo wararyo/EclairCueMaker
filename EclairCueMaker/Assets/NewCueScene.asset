@@ -14,16 +14,51 @@ MonoBehaviour:
   attachedSceneGUID: 
   cueList:
   - time: 0
-    gameObjectID: 9208
+    gameObjectID: 8880
     gameObject: {fileID: 0}
-    cueEventID: 324a94shtj65y5u4l
-    parameter: 
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: 3
     paramObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
       type: 2}
   - time: 0
-    gameObjectID: -1
+    gameObjectID: 8880
     gameObject: {fileID: 0}
-    cueEventID: 
-    parameter: 
+    cueEventID: 79k8hvjh2gv34h3
+    parameter: 8900
     paramObject: {fileID: 0}
+  - time: 0
+    gameObjectID: 8880
+    gameObject: {fileID: 0}
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: 5
+    paramObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
+      type: 2}
+  - time: 0
+    gameObjectID: 8880
+    gameObject: {fileID: 0}
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: 6
+    paramObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
+      type: 2}
+  - time: 0
+    gameObjectID: 8880
+    gameObject: {fileID: 0}
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: 7
+    paramObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
+      type: 2}
+  - time: 0
+    gameObjectID: 8880
+    gameObject: {fileID: 0}
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: 8
+    paramObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
+      type: 2}
+  - time: 0
+    gameObjectID: 8880
+    gameObject: {fileID: 0}
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: 8
+    paramObject: {fileID: 1000012214172672, guid: 7292b34603b6fc249884f3052482c5ad,
+      type: 2}
   Version: 1

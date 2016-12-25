@@ -48,8 +48,10 @@ namespace wararyo.EclairCueMaker
 			time = copy.time;
 			gameObjectID = copy.gameObjectID;
             gameObject = copy.gameObject;
+            cueEventID = copy.cueEventID;
             //paramType = copy.paramType;
             parameter = copy.parameter;
+            paramObject = copy.paramObject;
 		}
     }
 

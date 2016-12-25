@@ -94,7 +94,7 @@ namespace wararyo.EclairCueMaker
                 }
                 else {
                     cueScene.cueList.Insert(list.index + 1, new Cue(cueScene.cueList[list.index]));
-                    cueListSerialized.arraySize++;
+                    //cueListSerialized.arraySize++;
                     list.index++;
                 }
             };
