@@ -36,7 +36,12 @@ namespace wararyo.EclairCueMaker
         [MenuItem("Window/EclairCueEditor")]
         static void Open()
         {
-            EditorWindow.GetWindow<CueSceneEditor>("CueEditor");
+            var window = EditorWindow.GetWindow<CueSceneEditor>("CueEditor");
+			string iconPath = AssetDatabase.GUIDToAssetPath ("40470457539b24899825bad08fdb5ed1");
+			Debug.Log (iconPath);
+			var icon = AssetDatabase.LoadAssetAtPath<Texture> (iconPath);
+
+			window.titleContent = new GUIContent ("CueEditor", icon);
         }
 
         void OnEnable()
