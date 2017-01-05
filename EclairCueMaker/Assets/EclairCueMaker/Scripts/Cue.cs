@@ -11,20 +11,15 @@ namespace wararyo.EclairCueMaker
 
         //CueDrawerにて変更
         [SerializeField]
-        private int gameObjectName;
+        public int gameObjectName;
 
         [SerializeField]
-        private string cueEventID;
+		public string cueEventID;
 
         //[SerializeField]
         //private System.Type paramType;
         [SerializeField]
-        private string parameter;
-
-        /*public GameObject getGameObject()
-        {
-            return 
-        }*/
+		public string parameter;
 
 		public Cue(){
 		}
