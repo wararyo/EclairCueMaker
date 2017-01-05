@@ -15,19 +15,19 @@ namespace wararyo.EclairCueMaker
 
         //CueDrawerにて変更
         [SerializeField]
-        private GameObject gameObject;
+        public GameObject gameObject;
 
         [SerializeField]
-        private string cueEventID;
+		public string cueEventID;
 
         //[SerializeField]
         //private System.Type paramType;
         [SerializeField]
-        private string parameter;
+		public string parameter;
 
 		//CueEventのTypeがObject型だった時のみ用いられる
 		[SerializeField]
-		private Object paramObject;
+		public Object paramObject;
 
 
 
