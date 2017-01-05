@@ -12,5 +12,35 @@ MonoBehaviour:
   m_Name: UIExampleCueScene
   m_EditorClassIdentifier: 
   attachedSceneGUID: 
-  cueList: []
+  cueList:
+  - time: 0.1
+    gameObjectID: -121992
+    gameObject: {fileID: 0}
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+    paramObject: {fileID: 0}
+  - time: 0.1
+    gameObjectID: -117278
+    gameObject: {fileID: 0}
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+    paramObject: {fileID: 0}
+  - time: 0.1
+    gameObjectID: 8880
+    gameObject: {fileID: 0}
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+    paramObject: {fileID: 0}
+  - time: 0.1
+    gameObjectID: -83212
+    gameObject: {fileID: 0}
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+    paramObject: {fileID: 0}
+  - time: 0.1
+    gameObjectID: -86840
+    gameObject: {fileID: 0}
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+    paramObject: {fileID: 0}
   Version: 1
