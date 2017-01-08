@@ -2,9 +2,9 @@
 	Properties{
 		_Color("Main Color", Color) = (1,1,1,1)
 		_BumpAmt("Distortion", Range(0,128)) = 10
-		_MainTex("Tint Color (RGB)", 2D) = "white" {}
+		_MainTex("Mask Color (RGB)", 2D) = "white" {}
 	_BumpMap("Normalmap", 2D) = "bump" {}
-	_Size("Size", Range(0, 20)) = 1
+	_Size("Size", Range(0, 100)) = 1
 	}
 
 		Category{
@@ -59,6 +59,7 @@
 	sampler2D _GrabTexture;
 	float4 _GrabTexture_TexelSize;
 	float _Size;
+	float4 _Color;
 
 
 
@@ -71,7 +72,7 @@
 		if (mask.a < 0.5) return tex2Dproj(_GrabTexture, i.uvgrab);
 
 		half4 sum = half4(0,0,0,0);
-#define GRABPIXEL(weight,kernelx) tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx*_Size, i.uvgrab.y + 0.5 * _GrabTexture_TexelSize.x * kernelx*_Size, i.uvgrab.z, i.uvgrab.w))) * weight
+#define GRABPIXEL(weight,kernelx) tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx*_Size*_Color.a, i.uvgrab.y + 0.5 * _GrabTexture_TexelSize.x * kernelx*_Size*_Color.a, i.uvgrab.z, i.uvgrab.w))) * weight
 		sum += GRABPIXEL(0.01, -4.0);
 		sum += GRABPIXEL(0.01, -3.5);
 		sum += GRABPIXEL(0.02, -3.0);
@@ -234,9 +235,9 @@
 		i.uvgrab.xy = offset * i.uvgrab.z + i.uvgrab.xy;
 
 		half4 col = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrab));
-		half4 tint = tex2D(_MainTex, i.uvmain) * _Color;
+		//half4 tint = tex2D(_MainTex, i.uvmain);
 
-		if (tint.a < 0.5) tex2Dproj(_GrabTexture, i.uvgrab);
+		//if (tint.a < 0.5) tex2Dproj(_GrabTexture, i.uvgrab);
 
 		return col ;
 	}
