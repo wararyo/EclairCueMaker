@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace wararyo.EclairCueMaker
 {
@@ -46,12 +47,13 @@ namespace wararyo.EclairCueMaker
 
         public void Invoke()
         {
-			if (cueScene.cueList[cursor].gameObject != null){
-				var cueEvent = cueScene.cueList [cursor].gameObject.GetComponents<CueEventBase> () [0];
+			if (cueScene.cueList[cursor].gameObjectName != ""){
+                GameObject go = GameObject.Find(cueScene.cueList[cursor].gameObjectName);
+
+                var cueEvent = go.GetComponents<CueEventBase> () [0];
 				cueEvent.Cue<string>(cueScene.cueList[cursor].parameter);//抽象クラス最高！
-				Debug.Log(cueScene.cueList[cursor].gameObject.name);
+				Debug.Log(go.name);
 			}
-			Debug.Log ("nullだなぁ");
             time = 0;
             Cursor++;
         }

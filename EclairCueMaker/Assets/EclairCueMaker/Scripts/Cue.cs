@@ -9,9 +9,7 @@ namespace wararyo.EclairCueMaker
         [SerializeField]
         public float time;
 
-        //CueDrawerにて変更
-        [SerializeField]
-        public int gameObjectName;
+        public string gameObjectName;
 
         [SerializeField]
 		public string cueEventID;
