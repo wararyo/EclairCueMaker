@@ -118,7 +118,7 @@ namespace wararyo.EclairCueMaker
 				try{
 					GameObject o = (GameObject)EditorGUI.ObjectField(rect, GetGameObjectByPathOrGUID(param), typeof(GameObject),true);
                     string path = AssetDatabase.GetAssetOrScenePath(o);
-                    if(path == "")
+                    if(path.EndsWith(".unity"))
                     {
                         return GetHierarchyPath(o.transform);//Scene上のやつだったら
                     }
