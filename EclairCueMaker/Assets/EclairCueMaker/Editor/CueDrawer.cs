@@ -116,11 +116,11 @@ namespace wararyo.EclairCueMaker
             else if (type.Equals(typeof(GameObject)))
             {
 				try{
-					GameObject o = (GameObject)EditorGUI.ObjectField(rect, EditorUtility.InstanceIDToObject(int.Parse(param)), typeof(GameObject),true);
+					GameObject o = (GameObject)EditorGUI.ObjectField(rect, GetGameObjectByPathOrGUID(param), typeof(GameObject),true);
                     string path = AssetDatabase.GetAssetOrScenePath(o);
                     if(path == "")
                     {
-                        return o.name;
+                        return GetHierarchyPath(o.transform);//Scene上のやつだったら
                     }
                     else
                     {
@@ -167,6 +167,16 @@ namespace wararyo.EclairCueMaker
                 parent = parent.parent;
             }
             return path;
+        }
+
+        public GameObject GetGameObjectByPathOrGUID(string st)
+        {
+            GameObject go = GameObject.Find(st);
+            if (go == null)
+            {
+                return (GameObject)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(st), typeof(GameObject));
+            }
+            else return go;
         }
     }
 }
