@@ -14,9 +14,7 @@ MonoBehaviour:
   attachedSceneGUID: 
   cueList:
   - time: 0
-    gameObjectID: -1
-    gameObject: {fileID: 0}
-    cueEventID: 
-    parameter: 
-    paramObject: {fileID: 0}
+    gameObjectName: Cube
+    cueEventID: 768989fh76g8dfjg78f9ds0
+    parameter: hoge
   Version: 1

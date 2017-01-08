@@ -54,41 +54,37 @@ namespace wararyo.EclairCueMaker
 
                 //各プロパティーの SerializedProperty を求める
                 var timeFieldProperty = property.FindPropertyRelative ("time");
-				var gameObjectIDProperty = property.FindPropertyRelative ("gameObjectID");
-				var gameObjectProperty = property.FindPropertyRelative ("gameObject");
+				var gameObjectNameProperty = property.FindPropertyRelative ("gameObjectName");
                 var cueEventIDProperty = property.FindPropertyRelative("cueEventID");
                 var cueEventParamProperty = property.FindPropertyRelative("parameter");
-				var cueEventParamObjectProperty = property.FindPropertyRelative ("paramObject");
 
                 //GUIを配置
                 EditorGUI.LabelField (timeLabelRect, "Duration");
 				timeFieldProperty.floatValue = EditorGUI.FloatField (timeFieldRect, timeFieldProperty.floatValue);
 
-                GameObject go = (GameObject)EditorGUI.ObjectField(gameObjectRect, EditorUtility.InstanceIDToObject(gameObjectIDProperty.intValue), typeof(GameObject),true);
+                GameObject go = (GameObject)EditorGUI.ObjectField(gameObjectRect, GameObject.Find(gameObjectNameProperty.stringValue), typeof(GameObject),true);
                 try
                 {
-                    if (gameObjectIDProperty.intValue != go.GetInstanceID())
+                    if (gameObjectNameProperty.stringValue != GetHierarchyPath(go.transform))
                     {
-                        gameObjectIDProperty.intValue = go.GetInstanceID();
-                        gameObjectProperty.objectReferenceValue = go;
+                        gameObjectNameProperty.stringValue = GetHierarchyPath(go.transform);
                     }
                     cueEventList = go.GetComponents<CueEventBase>();
                 }
                 catch
                 {
-                    gameObjectIDProperty.intValue = -1;
-                    gameObjectProperty.objectReferenceValue = null;
+                    gameObjectNameProperty.stringValue = "";
                     cueEventList = null;
                 }
 				if (cueEventList != null) {
 					if (cueEventList.Length != 0) {
 						cueEventIDProperty.stringValue = cueEventList [EditorGUI.Popup (cueEventPopupRect, getIndexFromID (cueEventList, cueEventIDProperty.stringValue), getCueEventsStrings (cueEventList))].EventID;
 						string param = CueEventParamGUI (cueEventParamRect, cueEventParamProperty.stringValue, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
-						if(cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType.IsSubclassOf(typeof(Object))){
+						/*if(cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType.IsSubclassOf(typeof(Object))){
 							if (param != cueEventParamProperty.stringValue) {
 								cueEventParamObjectProperty.objectReferenceValue = EditorUtility.InstanceIDToObject (int.Parse (param));
 							}
-						}
+						}*/
 						cueEventParamProperty.stringValue = param;
 					}
 				}
@@ -117,13 +113,23 @@ namespace wararyo.EclairCueMaker
 					return EditorGUI.FloatField (rect, 0).ToString();
 				}
 			}
-            else if (type.IsSubclassOf(typeof(Object)))
+            else if (type.Equals(typeof(GameObject)))
             {
 				try{
-					return EditorGUI.ObjectField(rect, EditorUtility.InstanceIDToObject(int.Parse(param)), typeof(GameObject),true).GetInstanceID().ToString();}
+					GameObject o = (GameObject)EditorGUI.ObjectField(rect, GetGameObjectByPathOrGUID(param), typeof(GameObject),true);
+                    string path = AssetDatabase.GetAssetOrScenePath(o);
+                    if(path.EndsWith(".unity"))
+                    {
+                        return GetHierarchyPath(o.transform);//Scene上のやつだったら
+                    }
+                    else
+                    {
+                        return AssetDatabase.AssetPathToGUID(path);
+                    }
+                }
 				catch{
 					EditorGUI.ObjectField(rect, null, typeof(GameObject),true);
-					return "0";
+					return "";
 				}
             }
 			return "";
@@ -150,5 +156,27 @@ namespace wararyo.EclairCueMaker
 			}
 			return 0;
 		}
-	}
+
+        public string GetHierarchyPath(Transform self)
+        {
+            string path = self.gameObject.name;
+            Transform parent = self.parent;
+            while (parent != null)
+            {
+                path = parent.name + "/" + path;
+                parent = parent.parent;
+            }
+            return path;
+        }
+
+        public GameObject GetGameObjectByPathOrGUID(string st)
+        {
+            GameObject go = GameObject.Find(st);
+            if (go == null)
+            {
+                return (GameObject)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(st), typeof(GameObject));
+            }
+            else return go;
+        }
+    }
 }

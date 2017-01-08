@@ -41,7 +41,7 @@ public class CueEvent_Template : CueEventBase {
     /// string
     /// int
     /// float
-    /// GameObjectなどのUnityEngine.Object継承型
+    /// GameObject
     /// </summary>
     public override Type ParamType
     {

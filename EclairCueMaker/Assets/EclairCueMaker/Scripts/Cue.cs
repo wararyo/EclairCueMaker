@@ -9,13 +9,7 @@ namespace wararyo.EclairCueMaker
         [SerializeField]
         public float time;
 
-        //CueDrawerにて変更
-		[SerializeField]
-		private int gameObjectID;
-
-        //CueDrawerにて変更
-        [SerializeField]
-        public GameObject gameObject;
+        public string gameObjectName;
 
         [SerializeField]
 		public string cueEventID;
@@ -25,33 +19,15 @@ namespace wararyo.EclairCueMaker
         [SerializeField]
 		public string parameter;
 
-		//CueEventのTypeがObject型だった時のみ用いられる
-		[SerializeField]
-		public Object paramObject;
-
-
-
-        public GameObject getGameObject()
-        {
-            return gameObject;
-        }
-
-        /*public GameObject getGameObject()
-        {
-            return 
-        }*/
-
 		public Cue(){
 		}
 
 		public Cue(Cue copy){
 			time = copy.time;
-			gameObjectID = copy.gameObjectID;
-            gameObject = copy.gameObject;
+            gameObjectName = copy.gameObjectName;
             cueEventID = copy.cueEventID;
             //paramType = copy.paramType;
             parameter = copy.parameter;
-            paramObject = copy.paramObject;
 		}
     }
 
