@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerFollower : MonoBehaviour
@@ -28,8 +29,16 @@ public class PlayerFollower : MonoBehaviour
         set
         {
             Cursor.visible = !value;
-            if (value) Cursor.lockState = CursorLockMode.Locked;
-            else Cursor.lockState = CursorLockMode.None;
+            if (value)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                //SceneManager.UnloadScene("UIExample");
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                ///SceneManager.LoadSceneAsync("UIExample");
+            }
         }
     }
 
@@ -96,7 +105,7 @@ public class PlayerFollower : MonoBehaviour
             new Vector3(0, 0, -distance)
         );*/
         cameraTransform.LookAt(lookAt.GetComponent<Transform>().position);
-		cameraTransform.RotateAround (cameraTransform.position, cameraTransform.right, -4);
+		cameraTransform.RotateAround (cameraTransform.position, cameraTransform.right, -6);
     }
 
 }
