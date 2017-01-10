@@ -6,24 +6,17 @@ namespace wararyo.EclairCueMaker
 
     public abstract class StageGimmickBase : MonoBehaviour
     {
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public GameObject target;
+
+		[SerializeField, HideInInspector]
+		private string cueEventID;
 
         public virtual void DispatchEvent()
         {
-            target.GetComponent<CueEventBase>().Cue<string>("");
+			if (target)
+				target.GetComponent<CueEventBase> ().Cue<string> ("");
+			else
+				Debug.LogWarning ("Target of " + gameObject.name + "." + name + " is not assigned.");
         }
 
         public virtual void OnDrawGizmos()
