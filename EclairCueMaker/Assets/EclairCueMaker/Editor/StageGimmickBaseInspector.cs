@@ -23,7 +23,7 @@ namespace wararyo.EclairCueMaker
 
             EditorGUI.BeginChangeCheck();
 
-            var cueTarget = (GameObject)EditorGUILayout.ObjectField("Target", stageGimmickBase.target,typeof(GameObject),);
+            var cueTarget = (GameObject)EditorGUILayout.ObjectField("Target", stageGimmickBase.target,typeof(GameObject),true);
 
             if (EditorGUI.EndChangeCheck())
             {
