@@ -13,6 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachedSceneGUID: 
   cueList:
+  - time: 0
+    gameObjectName: BGCanvas/GlassPanel
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
   - time: 0.5
     gameObjectName: Canvas/Map
     cueEventID: t79ryhfrc98h0y9y7yts0e
