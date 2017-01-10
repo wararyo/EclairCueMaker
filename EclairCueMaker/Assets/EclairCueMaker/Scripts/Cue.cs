@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using System;
+
 namespace wararyo.EclairCueMaker
 {
     [System.Serializable]
@@ -29,6 +31,64 @@ namespace wararyo.EclairCueMaker
             //paramType = copy.paramType;
             parameter = copy.parameter;
 		}
+
+
+        //以下、ユーティリティ系
+
+        /// <summary>
+        /// 引数に指定したCueを実行します。
+        /// </summary>
+        public static void Invoke(Cue cue)
+        {
+            /*GameObject go = GameObject.Find(cue.gameObjectName);
+            var cueEvents = go.GetComponents<CueEventBase>();
+            foreach(CueEventBase e in cueEvents)
+            {
+                if (e.EventID.Equals(cue.cueEventID))
+                {
+                    e.Cue(ConvertParam(cue.parameter, e.ParamType));
+                }
+            }*/
+            Invoke(GameObject.Find(cue.gameObjectName), cue.cueEventID, cue.parameter);
+        }
+
+        public static void Invoke(GameObject go,string cueEventID,string parameter)
+        {
+            var cueEvents = go.GetComponents<CueEventBase>();
+            foreach (CueEventBase e in cueEvents)
+            {
+                if (e.EventID.Equals(cueEventID))
+                {
+                    e.Cue(ConvertParam(parameter, e.ParamType));
+                }
+            }
+        }
+
+        public static object ConvertParam(string st,Type type)
+        {
+            if (type.Equals(typeof(void)))
+            {
+                return null;
+            }
+            else if (type.Equals(typeof(string)))
+            {
+                return st;
+            }
+            else if (type.Equals(typeof(int)))
+            {
+                return int.Parse(st);
+            }
+            else if (type.Equals(typeof(float)))
+            {
+                return float.Parse(st);
+            }
+            else if (type.Equals(typeof(GameObject)))
+            {
+                return GameObject.Find(st);
+            }
+            return null;
+        }
+
     }
 
 }

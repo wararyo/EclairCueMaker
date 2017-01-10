@@ -6,15 +6,19 @@ namespace wararyo.EclairCueMaker
 
     public abstract class StageGimmickBase : MonoBehaviour
     {
+        [HideInInspector]
         public GameObject target;
 
 		[SerializeField, HideInInspector]
 		private string cueEventID;
 
+        [HideInInspector]
+        public string parameter;
+
         public virtual void DispatchEvent()
         {
-			if (target)
-				target.GetComponent<CueEventBase> ().Cue (null);
+            if (target)
+                Cue.Invoke(target,cueEventID,parameter);
 			else
 				Debug.LogWarning ("Target of " + gameObject.name + "." + name + " is not assigned.");
         }

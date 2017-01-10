@@ -6,8 +6,6 @@ using wararyo.EclairCueMaker;
 
 public class CueEvent_PlayParticle : CueEventBase {
 
-	private bool isStaged = false;
-
     public float duration;
 
 	// Use this for initialization
