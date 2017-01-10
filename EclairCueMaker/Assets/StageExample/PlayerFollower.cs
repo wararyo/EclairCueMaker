@@ -20,24 +20,25 @@ public class PlayerFollower : MonoBehaviour
     private float distance;
     private Vector3 cameraOffset;
 
-    private bool cursorIsLocked
+    private static bool cursorIsLocked = false;
+    public static bool CursorIsLocked
     {
         get
         {
-            return !Cursor.visible;
+            return cursorIsLocked;
         }
         set
         {
-            Cursor.visible = !value;
+            cursorIsLocked = value;
             if (value)
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                //SceneManager.UnloadScene("UIExample");
+                SceneManager.UnloadScene("UIExample");
             }
             else
             {
                 Cursor.lockState = CursorLockMode.None;
-                ///SceneManager.LoadSceneAsync("UIExample");
+                SceneManager.LoadSceneAsync("UIExample",LoadSceneMode.Additive);
             }
         }
     }
@@ -57,21 +58,26 @@ public class PlayerFollower : MonoBehaviour
 
     void Awake()
     {
-        cursorIsLocked = true;
+        CursorIsLocked = true;
+    }
+
+    void Update()
+    {
+        if (Application.isEditor && Input.GetButtonDown("Fire2"))
+        {
+            CursorIsLocked = true;
+        }
+
+        if (Input.GetKeyDown("escape"))
+        {
+            CursorIsLocked = !CursorIsLocked;
+        }
     }
 
     // 全ての処理が終わったとにカメラの位置を調整するためにLateUpdateにする
     void LateUpdate()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            cursorIsLocked = true;
-        }
 
-        if (Input.GetKeyDown("escape"))
-        {
-            cursorIsLocked = false;
-        }
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         distance += scroll * 4;
