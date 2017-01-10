@@ -12,5 +12,37 @@ MonoBehaviour:
   m_Name: UIExampleCueScene
   m_EditorClassIdentifier: 
   attachedSceneGUID: 
-  cueList: []
+  cueList:
+  - time: 0.5
+    gameObjectName: Canvas/Map
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+  - time: 0.1
+    gameObjectName: Canvas/Description
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+  - time: 0.1
+    gameObjectName: Canvas/ParticleOrange
+    cueEventID: 986sf789juykj6h87khfuy
+    parameter: 
+  - time: 0.05
+    gameObjectName: Canvas/ParticleBlue
+    cueEventID: 986sf789juykj6h87khfuy
+    parameter: 
+  - time: 0.1
+    gameObjectName: Canvas/BackToHome
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+  - time: 0.05
+    gameObjectName: Canvas/Help
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+  - time: 0.05
+    gameObjectName: Canvas/Achievement
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+  - time: 0.05
+    gameObjectName: Canvas/Preference
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
   Version: 1
