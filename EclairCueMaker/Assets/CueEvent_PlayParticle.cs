@@ -58,7 +58,7 @@ public class CueEvent_PlayParticle : CueEventBase {
 	}
 
 
-	public override void Cue<T>(T param)
+	public override void Cue(object param)
 	{
         StartCoroutine(coroutine());
 	}

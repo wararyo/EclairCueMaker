@@ -21,6 +21,6 @@ namespace wararyo.EclairCueMaker
             get;
         }
 
-        public abstract void Cue<T>(T param);
+        public abstract void Cue(object param);
     }
 }

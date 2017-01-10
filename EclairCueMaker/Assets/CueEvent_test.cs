@@ -49,7 +49,7 @@ public class CueEvent_test : CueEventBase {
     }
 
 
-    public override void Cue<T>(T param)
+    public override void Cue(object param)
     {
         //ここに任意の処理を記述
     }

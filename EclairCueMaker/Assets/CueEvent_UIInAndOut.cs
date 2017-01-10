@@ -66,7 +66,7 @@ public class CueEvent_UIInAndOut : CueEventBase {
 	}
 
 
-	public override void Cue<T>(T param)
+	public override void Cue(object param)
 	{
 		//Debug.Log ("aho");
 		if (isStaged) {//アウトのアニメーション

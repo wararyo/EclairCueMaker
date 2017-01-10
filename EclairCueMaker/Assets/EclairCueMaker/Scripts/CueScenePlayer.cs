@@ -51,7 +51,7 @@ namespace wararyo.EclairCueMaker
                 GameObject go = GameObject.Find(cueScene.cueList[cursor].gameObjectName);
 
                 var cueEvent = go.GetComponents<CueEventBase> () [0];
-				cueEvent.Cue<string>(cueScene.cueList[cursor].parameter);//抽象クラス最高！
+				cueEvent.Cue(cueScene.cueList[cursor].parameter);//抽象クラス最高！
 				Debug.Log(go.name);
 			}
             time = 0;

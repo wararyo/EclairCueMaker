@@ -54,7 +54,7 @@ public class CueEvent_PlayState : CueEventBase {
     }
 
 
-    public override void Cue<T>(T param)
+    public override void Cue(object param)
     {
         GetComponent<Animator>().Play(stateName);
     }

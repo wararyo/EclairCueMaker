@@ -14,7 +14,7 @@ namespace wararyo.EclairCueMaker
         public virtual void DispatchEvent()
         {
 			if (target)
-				target.GetComponent<CueEventBase> ().Cue<string> ("");
+				target.GetComponent<CueEventBase> ().Cue (null);
 			else
 				Debug.LogWarning ("Target of " + gameObject.name + "." + name + " is not assigned.");
         }
