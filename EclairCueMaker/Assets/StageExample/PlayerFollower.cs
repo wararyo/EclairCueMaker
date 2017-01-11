@@ -34,16 +34,19 @@ public class PlayerFollower : MonoBehaviour
         }
         set
         {
-            Cursor.visible = !value;
-            if (value)
+            if (!Application.isEditor || Application.isPlaying)
             {
-                Cursor.lockState = CursorLockMode.Locked;
-				if (!Application.isEditor || Application.isPlaying) SceneManager.UnloadScene("UIExample");
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-				SceneManager.LoadSceneAsync("UIExample",LoadSceneMode.Additive);
+                Cursor.visible = !value;
+                if (value)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    SceneManager.UnloadScene("UIExample");
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    SceneManager.LoadSceneAsync("UIExample", LoadSceneMode.Additive);
+                }
             }
         }
     }
@@ -71,7 +74,8 @@ public class PlayerFollower : MonoBehaviour
     // 全ての処理が終わったとにカメラの位置を調整するためにLateUpdateにする
     void LateUpdate()
     {
-		if (!Application.isEditor || Application.isPlaying) {
+        Debug.Log("wieweiweiwewei");
+        if (!Application.isEditor || Application.isPlaying) {
 			Debug.Log ("あれあれ");
 			if (Input.GetButtonDown ("Fire1")) {
 				cursorIsLocked = true;
@@ -84,7 +88,7 @@ public class PlayerFollower : MonoBehaviour
 
 		Debug.Log ("hoge");
 
-		if (cursorIsLocked) {
+		if (cursorIsLocked || (Application.isEditor && !Application.isPlaying)) {
 			if (isConrtollable && (!Application.isEditor || Application.isPlaying)) {
 				y += Input.GetAxis ("Mouse X") * Time.deltaTime * mouseSensitivity;
 				angle -= Input.GetAxis ("Mouse Y") * Time.deltaTime * mouseSensitivity;
