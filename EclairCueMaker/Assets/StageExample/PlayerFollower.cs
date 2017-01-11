@@ -32,12 +32,12 @@ public class PlayerFollower : MonoBehaviour
             if (value)
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                //SceneManager.UnloadScene("UIExample");
+                SceneManager.UnloadScene("UIExample");
             }
             else
             {
                 Cursor.lockState = CursorLockMode.None;
-                ///SceneManager.LoadSceneAsync("UIExample");
+				SceneManager.LoadSceneAsync("UIExample",LoadSceneMode.Additive);
             }
         }
     }
