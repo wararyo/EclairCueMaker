@@ -17,15 +17,15 @@ MonoBehaviour:
     gameObjectName: BGCanvas/GlassPanel
     cueEventID: t79ryhfrc98h0y9y7yts0e
     parameter: 
-  - time: 0.5
+  - time: 0.4
     gameObjectName: Canvas/Map
     cueEventID: t79ryhfrc98h0y9y7yts0e
     parameter: 
-  - time: 0.1
+  - time: 0.05
     gameObjectName: Canvas/Description
     cueEventID: t79ryhfrc98h0y9y7yts0e
     parameter: 
-  - time: 0.1
+  - time: 0.05
     gameObjectName: Canvas/ParticleOrange
     cueEventID: 986sf789juykj6h87khfuy
     parameter: 
@@ -33,7 +33,7 @@ MonoBehaviour:
     gameObjectName: Canvas/ParticleBlue
     cueEventID: 986sf789juykj6h87khfuy
     parameter: 
-  - time: 0.1
+  - time: 0
     gameObjectName: Canvas/BackToHome
     cueEventID: t79ryhfrc98h0y9y7yts0e
     parameter: 
