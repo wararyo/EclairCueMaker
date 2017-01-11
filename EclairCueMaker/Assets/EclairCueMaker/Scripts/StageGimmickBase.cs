@@ -9,8 +9,8 @@ namespace wararyo.EclairCueMaker
         [HideInInspector]
         public GameObject target;
 
-		[SerializeField, HideInInspector]
-		private string cueEventID;
+		[HideInInspector]
+		public string cueEventID;
 
         [HideInInspector]
         public string parameter;

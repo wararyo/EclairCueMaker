@@ -91,7 +91,7 @@ namespace wararyo.EclairCueMaker
 			}
 		}
 
-		private string CueEventParamGUI(Rect rect,string param,System.Type type)
+		public static string CueEventParamGUI(Rect rect,string param,System.Type type)
         {
 			if (type.Equals (typeof(void))) {
 				return "";
@@ -157,7 +157,7 @@ namespace wararyo.EclairCueMaker
 			return 0;
 		}
 
-        public string GetHierarchyPath(Transform self)
+        public static string GetHierarchyPath(Transform self)
         {
             string path = self.gameObject.name;
             Transform parent = self.parent;
@@ -169,7 +169,7 @@ namespace wararyo.EclairCueMaker
             return path;
         }
 
-        public GameObject GetGameObjectByPathOrGUID(string st)
+        public static GameObject GetGameObjectByPathOrGUID(string st)
         {
             GameObject go = GameObject.Find(st);
             if (go == null)

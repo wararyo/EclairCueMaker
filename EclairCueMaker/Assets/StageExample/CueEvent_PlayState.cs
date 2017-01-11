@@ -20,7 +20,7 @@ public class CueEvent_PlayState : CueEventBase {
         }
     }
 
-    public string stateName = "Anim";
+    //public string stateName = "Anim";
 
     /// <summary>
     /// CueEvent同士を区別するときに用いる識別子です。
@@ -56,6 +56,6 @@ public class CueEvent_PlayState : CueEventBase {
 
     public override void Cue(object param)
     {
-        GetComponent<Animator>().Play(stateName);
+		GetComponent<Animator>().Play((string)param);
     }
 }
