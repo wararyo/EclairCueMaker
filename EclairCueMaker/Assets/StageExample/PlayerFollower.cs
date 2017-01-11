@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class PlayerFollower : MonoBehaviour
 {
     public GameObject lookAt;
@@ -15,9 +16,14 @@ public class PlayerFollower : MonoBehaviour
     public float maxAngle = 80.0f;
     public float minAngle = 5.0f;
 
-    private float y;    // カメラのY軸成分
-    private float angle;
-    private float distance;
+	[Tooltip("マウスや右スティックでカメラが動かせるかどうか")]
+	public bool isConrtollable = true;
+
+	[Space]
+    public float y;    // カメラのY軸成分
+	public float angle;
+	public float distance;
+
     private Vector3 cameraOffset;
 
     private bool cursorIsLocked
@@ -32,7 +38,7 @@ public class PlayerFollower : MonoBehaviour
             if (value)
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                SceneManager.UnloadScene("UIExample");
+				if (!Application.isEditor || Application.isPlaying) SceneManager.UnloadScene("UIExample");
             }
             else
             {
@@ -57,53 +63,47 @@ public class PlayerFollower : MonoBehaviour
 
     void Awake()
     {
-        cursorIsLocked = true;
+		if (!Application.isEditor || Application.isPlaying)
+			cursorIsLocked = true;
+		else cursorIsLocked = false;
     }
 
     // 全ての処理が終わったとにカメラの位置を調整するためにLateUpdateにする
     void LateUpdate()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            cursorIsLocked = true;
-        }
+		if (!Application.isEditor || Application.isPlaying) {
+			Debug.Log ("あれあれ");
+			if (Input.GetButtonDown ("Fire1")) {
+				cursorIsLocked = true;
+			}
 
-        if (Input.GetKeyDown("escape"))
-        {
-            cursorIsLocked = false;
-        }
+			if (Input.GetKeyDown ("escape")) {
+				cursorIsLocked = false;
+			}
+		}
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        distance += scroll * 4;
+		Debug.Log ("hoge");
 
-        if (cursorIsLocked)
-        {
-            y += Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
-            angle -= Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
+		if (cursorIsLocked) {
+			if (isConrtollable && (!Application.isEditor || Application.isPlaying)) {
+				y += Input.GetAxis ("Mouse X") * Time.deltaTime * mouseSensitivity;
+				angle -= Input.GetAxis ("Mouse Y") * Time.deltaTime * mouseSensitivity;
+				float scroll = Input.GetAxis("Mouse ScrollWheel");
+				distance += scroll * 4;
+			}
 
-            if (angle > maxAngle) angle = maxAngle;
-            if (angle < minAngle) angle = minAngle;
+			if (angle > maxAngle)
+				angle = maxAngle;
+			if (angle < minAngle)
+				angle = minAngle;
 
-            cameraOffset = new Vector3(0, 0, -distance);
-            cameraOffset = Quaternion.Euler(angle, y, 0) * cameraOffset;
-        }
+			cameraOffset = new Vector3 (0, 0, -distance);
+			cameraOffset = Quaternion.Euler (angle, y, 0) * cameraOffset;
+			Debug.Log ("foo");
+		}
 
         Transform lookAtTransform = lookAt.GetComponent<Transform>();
         cameraTransform.position = lookAtTransform.position + cameraOffset;
-
-        /*if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            distance += Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 500;
-            distance = Mathf.Clamp(distance, 3.0f, 20.0f);
-        }*/
-        
-        // カメラをオブジェクトから角度(20.0f, angleY, 0.0f)にdistance分離れた位置に配置
-        /*Vector3 center = transform.position + centerOffset;
-        cameraTransform.position = center + (
-            Quaternion.AngleAxis(angleY, Vector3.up) *
-            Quaternion.AngleAxis(20.0f, Vector3.right) *
-            new Vector3(0, 0, -distance)
-        );*/
         cameraTransform.LookAt(lookAt.GetComponent<Transform>().position);
 		cameraTransform.RotateAround (cameraTransform.position, cameraTransform.right, -6);
     }
