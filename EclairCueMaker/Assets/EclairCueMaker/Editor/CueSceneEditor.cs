@@ -33,6 +33,11 @@ namespace wararyo.EclairCueMaker
 
 		const string MessageWhenUnEditable = "GameObjectにCueScenePlayerをアタッチし、CueSceneを指定すると編集できます。";
 
+        [System.NonSerialized]
+        GUIStyle lockButtonStyle;
+        [System.NonSerialized]
+        bool locked = false;
+
         [MenuItem("Window/EclairCueEditor")]
         static void Open()
         {
@@ -51,7 +56,15 @@ namespace wararyo.EclairCueMaker
 			OnSelectionChanged ();
         }
 
-		void OnSelectionChanged(){
+        void ShowButton(Rect position)
+        {
+            if (lockButtonStyle == null)
+                lockButtonStyle = "IN LockButton";
+            locked = GUI.Toggle(position, locked, GUIContent.none, lockButtonStyle);
+        }
+
+        void OnSelectionChanged(){
+            if (locked) return;
 			isEditable = false;
 			foreach(GameObject go in Selection.gameObjects)
 			{

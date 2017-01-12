@@ -74,7 +74,7 @@ public class PlayerFollower : MonoBehaviour
     // 全ての処理が終わったとにカメラの位置を調整するためにLateUpdateにする
     void LateUpdate()
     {
-        Debug.Log("wieweiweiwewei");
+        //Debug.Log("wieweiweiwewei");
         if (!Application.isEditor || Application.isPlaying) {
 			Debug.Log ("あれあれ");
 			if (Input.GetButtonDown ("Fire1")) {
@@ -86,7 +86,7 @@ public class PlayerFollower : MonoBehaviour
 			}
 		}
 
-		Debug.Log ("hoge");
+		//Debug.Log ("hoge");
 
 		if (cursorIsLocked || (Application.isEditor && !Application.isPlaying)) {
 			if (isConrtollable && (!Application.isEditor || Application.isPlaying)) {
@@ -103,7 +103,7 @@ public class PlayerFollower : MonoBehaviour
 
 			cameraOffset = new Vector3 (0, 0, -distance);
 			cameraOffset = Quaternion.Euler (angle, y, 0) * cameraOffset;
-			Debug.Log ("foo");
+			//Debug.Log ("foo");
 		}
 
         Transform lookAtTransform = lookAt.GetComponent<Transform>();
