@@ -15,10 +15,13 @@ namespace wararyo.EclairCueMaker
         [HideInInspector]
         public string parameter;
 
+        [HideInInspector]
+        public Object paramObject;
+
         public virtual void DispatchEvent()
         {
             if (target)
-                Cue.Invoke(target,cueEventID,parameter);
+                Cue.Invoke(target,new Cue(0,"",cueEventID,parameter,paramObject));
 			else
 				Debug.LogWarning ("Target of " + gameObject.name + "." + name + " is not assigned.");
         }

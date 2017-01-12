@@ -82,9 +82,9 @@ namespace wararyo.EclairCueMaker
 						cueEventIDProperty.stringValue = cueEventList [EditorGUI.Popup (cueEventPopupRect, getIndexFromID (cueEventList, cueEventIDProperty.stringValue), getCueEventsStrings (cueEventList))].EventID;
 						CueEventBase cueEvent = cueEventList [getIndexFromID (cueEventList, cueEventIDProperty.stringValue)];
 						string param = CueEventParamGUI (cueEventParamRect, cueEventParamProperty.stringValue, cueEvent.ParamType);
-						if (cueEvent.ParamType.IsSubclassOf (Object)) {
-							cueEventParamObjectProperty.objectReferenceValue = GetGameObjectByPathOrGUID (param);
-						}
+						if (cueEvent.ParamType.IsSubclassOf (typeof(Object))) {
+							cueEventParamObjectProperty.objectReferenceValue = (Object)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(param), typeof(Object));
+                        }
 						/*if(cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType.IsSubclassOf(typeof(Object))){
 							if (param != cueEventParamProperty.stringValue) {
 								cueEventParamObjectProperty.objectReferenceValue = EditorUtility.InstanceIDToObject (int.Parse (param));
@@ -137,8 +137,8 @@ namespace wararyo.EclairCueMaker
 					return "";
 				}
             }
-			else if(type.IsSubclassOf(Object)){
-				GameObject go = (GameObject)EditorGUI.ObjectField(rect,AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(param)),typeof(Object),false);
+			else if(type.IsSubclassOf(typeof(Object))){
+				Object go = (Object)EditorGUI.ObjectField(rect,AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(param),typeof(Object)),typeof(Object),false);
 				return AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(go));
 			}
 			return "";

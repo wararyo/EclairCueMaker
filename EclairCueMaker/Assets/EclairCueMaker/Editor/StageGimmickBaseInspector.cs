@@ -26,14 +26,29 @@ namespace wararyo.EclairCueMaker
 
             var cueTarget = (GameObject)EditorGUILayout.ObjectField("Target", stageGimmickBase.target,typeof(GameObject),true);
 
-			string cueEventID = "";
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObject(stageGimmickBase, "Change Cue Target");
+                stageGimmickBase.target = cueTarget;
+                cueEventList = cueTarget.GetComponents<CueEventBase>();
+            }
+            EditorGUI.BeginChangeCheck();
+
+
+            string cueEventID = "";
 			string param = "";
+            Object paramObject = null;
 
 			if (cueEventList != null) {
 				if (cueEventList.Length != 0) {
 					cueEventID = cueEventList [EditorGUILayout.Popup (CueDrawer.getIndexFromID (cueEventList, stageGimmickBase.cueEventID), CueDrawer.getCueEventsStrings (cueEventList))].EventID;
 					EditorGUILayout.LabelField ("","");
-					param = CueDrawer.CueEventParamGUI (GUILayoutUtility.GetLastRect(), stageGimmickBase.parameter, cueEventList[CueDrawer.getIndexFromID (cueEventList, stageGimmickBase.cueEventID)].ParamType);
+                    CueEventBase cueEvent = cueEventList[CueDrawer.getIndexFromID(cueEventList, stageGimmickBase.cueEventID)];
+
+                    param = CueDrawer.CueEventParamGUI (GUILayoutUtility.GetLastRect(), stageGimmickBase.parameter, cueEvent.ParamType);
+                    if (cueEvent.ParamType.IsSubclassOf(typeof(Object))){
+                        paramObject = (Object)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(param), typeof(Object));
+                    }
 				}
 			}
 
@@ -43,11 +58,9 @@ namespace wararyo.EclairCueMaker
                 //変更前に Undo に登録
                 Undo.RecordObject(stageGimmickBase, "Change Cue");
 
-                stageGimmickBase.target = cueTarget;
 				stageGimmickBase.cueEventID = cueEventID;
 				stageGimmickBase.parameter = param;
-
-				cueEventList = cueTarget.GetComponents<CueEventBase>();
+                stageGimmickBase.paramObject = paramObject;
 				//Debug.Log ("cueEventID"+cueEventID);
             }
 

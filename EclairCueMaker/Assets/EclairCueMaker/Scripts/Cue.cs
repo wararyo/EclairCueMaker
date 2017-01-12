@@ -28,12 +28,22 @@ namespace wararyo.EclairCueMaker
 		public Cue(){
 		}
 
+        public Cue(float time,string gameObjectName,string cueEventID,string parameter,UnityEngine.Object paramObject)
+        {
+            this.time = time;
+            this.gameObjectName = gameObjectName;
+            this.cueEventID = cueEventID;
+            this.parameter = parameter;
+            this.paramObject = paramObject;
+        }
+
 		public Cue(Cue copy){
 			time = copy.time;
             gameObjectName = copy.gameObjectName;
             cueEventID = copy.cueEventID;
             //paramType = copy.paramType;
             parameter = copy.parameter;
+            paramObject = copy.paramObject;
 		}
 
 
@@ -53,23 +63,24 @@ namespace wararyo.EclairCueMaker
                     e.Cue(ConvertParam(cue.parameter, e.ParamType));
                 }
             }*/
-            Invoke(GameObject.Find(cue.gameObjectName), cue.cueEventID, cue.parameter);
+            Invoke(GameObject.Find(cue.gameObjectName), cue);
         }
 
-        public static void Invoke(GameObject go,string cueEventID,string parameter)
+        public static void Invoke(GameObject go,Cue cue)
         {
             var cueEvents = go.GetComponents<CueEventBase>();
             foreach (CueEventBase e in cueEvents)
             {
-                if (e.EventID.Equals(cueEventID))
+                if (e.EventID.Equals(cue.cueEventID))
                 {
-                    e.Cue(ConvertParam(parameter, e.ParamType));
+                    e.Cue(ConvertParam(cue,e.ParamType));
                 }
             }
         }
 
-        public static object ConvertParam(string st,Type type)
+        public static object ConvertParam(Cue cue,Type type)
         {
+            string st = cue.parameter;
             if (type.Equals(typeof(void)))
             {
                 return null;
@@ -91,7 +102,7 @@ namespace wararyo.EclairCueMaker
                 return GameObject.Find(st);
             }
 			else if(type.IsSubclassOf(typeof(UnityEngine.Object))){
-				return AssetD;
+                return cue.paramObject;
 			}
             return null;
         }
