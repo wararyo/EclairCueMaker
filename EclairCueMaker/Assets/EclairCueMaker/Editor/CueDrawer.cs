@@ -57,6 +57,7 @@ namespace wararyo.EclairCueMaker
 				var gameObjectNameProperty = property.FindPropertyRelative ("gameObjectName");
                 var cueEventIDProperty = property.FindPropertyRelative("cueEventID");
                 var cueEventParamProperty = property.FindPropertyRelative("parameter");
+				var cueEventParamObjectProperty = property.FindPropertyRelative ("paramObject");
 
                 //GUIを配置
                 EditorGUI.LabelField (timeLabelRect, "Duration");
@@ -79,7 +80,11 @@ namespace wararyo.EclairCueMaker
 				if (cueEventList != null) {
 					if (cueEventList.Length != 0) {
 						cueEventIDProperty.stringValue = cueEventList [EditorGUI.Popup (cueEventPopupRect, getIndexFromID (cueEventList, cueEventIDProperty.stringValue), getCueEventsStrings (cueEventList))].EventID;
-						string param = CueEventParamGUI (cueEventParamRect, cueEventParamProperty.stringValue, cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType);
+						CueEventBase cueEvent = cueEventList [getIndexFromID (cueEventList, cueEventIDProperty.stringValue)];
+						string param = CueEventParamGUI (cueEventParamRect, cueEventParamProperty.stringValue, cueEvent.ParamType);
+						if (cueEvent.ParamType.IsSubclassOf (Object)) {
+							cueEventParamObjectProperty.objectReferenceValue = GetGameObjectByPathOrGUID (param);
+						}
 						/*if(cueEventList[getIndexFromID (cueEventList, cueEventIDProperty.stringValue)].ParamType.IsSubclassOf(typeof(Object))){
 							if (param != cueEventParamProperty.stringValue) {
 								cueEventParamObjectProperty.objectReferenceValue = EditorUtility.InstanceIDToObject (int.Parse (param));
@@ -132,6 +137,10 @@ namespace wararyo.EclairCueMaker
 					return "";
 				}
             }
+			else if(type.IsSubclassOf(Object)){
+				GameObject go = (GameObject)EditorGUI.ObjectField(rect,AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(param)),typeof(Object),false);
+				return AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(go));
+			}
 			return "";
         }
 

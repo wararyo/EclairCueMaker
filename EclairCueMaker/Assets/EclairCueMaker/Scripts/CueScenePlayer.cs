@@ -8,9 +8,15 @@ namespace wararyo.EclairCueMaker
     {
 		public CueScene cueScene;
 
+		public bool playOnAwake = true;
+		public bool loop = false;
+
         private float time = 0;
 
         private int cursor = 0;
+
+		private bool isPlaying = false;
+
         public int Cursor
         {
             get
@@ -28,21 +34,28 @@ namespace wararyo.EclairCueMaker
 
         protected virtual void Start()
         {
-            //StartCoroutine(coroutine());
+			if (playOnAwake)
+				Play ();
         }
 
         protected virtual void Update()
         {
-            time += Time.deltaTime;
-			if (cueScene.Count == cursor)
-                return;
-			if (0 <= cueScene.cueList[cursor].time)
-            {
-				if (cueScene.cueList[cursor].time < time)
-                {
-                    Invoke();
-                }
-            }
+			if (isPlaying) {
+				time += Time.deltaTime;
+				if (cueScene.Count == cursor) {
+					if (loop) {
+						cursor = 0;
+						time = 0;
+					}
+					else
+						Stop ();
+				}
+				if (0 <= cueScene.cueList [cursor].time) {
+					if (cueScene.cueList [cursor].time < time) {
+						Invoke ();
+					}
+				}
+			}
         }
 
         public void Invoke()
@@ -53,6 +66,27 @@ namespace wararyo.EclairCueMaker
             time = 0;
             Cursor++;
         }
+
+		public void Play(){
+			isPlaying = true;
+		}
+
+		public void Play(CueScene cuescene){
+			this.cueScene = cuescene;
+			cursor = 0;
+			time = 0;
+			Play ();
+		}
+
+		public void Stop(){
+			Pause ();
+			cursor = 0;
+			time = 0;
+		}
+
+		public void Pause(){
+			isPlaying = false;
+		}
     }
 
 }

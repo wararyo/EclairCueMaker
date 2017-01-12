@@ -21,6 +21,10 @@ namespace wararyo.EclairCueMaker
         [SerializeField]
 		public string parameter;
 
+		//parameterにScene上にないオブジェクトが指定された時に使用される
+		//ちょっと頭悪い方法だけど…他に思いつかないので…
+		public UnityEngine.Object paramObject;
+
 		public Cue(){
 		}
 
@@ -86,6 +90,9 @@ namespace wararyo.EclairCueMaker
             {
                 return GameObject.Find(st);
             }
+			else if(type.IsSubclassOf(typeof(UnityEngine.Object))){
+				return AssetD;
+			}
             return null;
         }
 
