@@ -3,7 +3,7 @@ using System.Collections;
 using wararyo.EclairCueMaker;
 using System;
 
-public class CueEvent_PlayState : CueEventBase {
+public class CueEvent_AnimatorEnabled : CueEventBase {
 
 	void Start () {
 	}
@@ -15,7 +15,7 @@ public class CueEvent_PlayState : CueEventBase {
     {
         get
         {
-            return "PlayAnimatorState";
+            return "ChangeAnimatorEnabled";
         }
     }
 
@@ -31,7 +31,7 @@ public class CueEvent_PlayState : CueEventBase {
     {
         get
         {
-            return "656f78s8f9d0n97d";
+            return "897fh6h879t4soioc3rio";
         }
     }
 
@@ -48,13 +48,13 @@ public class CueEvent_PlayState : CueEventBase {
     {
         get
         {
-            return typeof(string);
+            return typeof(bool);
         }
     }
 
 
     public override void Cue(object param)
     {
-		GetComponent<Animator>().Play((string)param);
+		GetComponent<Animator>().enabled = (bool)param;
     }
 }

@@ -97,6 +97,10 @@ namespace wararyo.EclairCueMaker
             {
                 return float.Parse(st);
             }
+            else if (type.Equals(typeof(bool)))
+            {
+                return bool.Parse(st);
+            }
             else if (type.Equals(typeof(GameObject)))
             {
                 return GameObject.Find(st);

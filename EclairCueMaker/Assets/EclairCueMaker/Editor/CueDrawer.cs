@@ -117,7 +117,14 @@ namespace wararyo.EclairCueMaker
 				catch{
 					return EditorGUI.FloatField (rect, 0).ToString();
 				}
-			}
+			}else if (type.Equals(typeof(bool)))
+            {
+                try { return EditorGUI.Toggle(rect, bool.Parse(param)).ToString(); }
+                catch
+                {
+                    return EditorGUI.Toggle(rect, false).ToString();
+                }
+            }
             else if (type.Equals(typeof(GameObject)))
             {
 				try{
