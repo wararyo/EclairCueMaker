@@ -76,7 +76,7 @@ public class PlayerFollower : MonoBehaviour
     {
         //Debug.Log("wieweiweiwewei");
         if (!Application.isEditor || Application.isPlaying) {
-			Debug.Log ("あれあれ");
+			//Debug.Log ("あれあれ");
 			if (Input.GetButtonDown ("Fire1")) {
 				cursorIsLocked = true;
 			}

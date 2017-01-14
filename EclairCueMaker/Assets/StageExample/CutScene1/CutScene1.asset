@@ -13,9 +13,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachedSceneGUID: 
   cueList:
-  - time: 0
+  - time: 1
+    gameObjectName: Canvas/Belt
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
+    paramObject: {fileID: 0}
+  - time: 1
+    gameObjectName: Main Camera
+    cueEventID: 656f78s8f9d0n97d
+    parameter: CutScene1
+    paramObject: {fileID: 0}
+  - time: 2
     gameObjectName: Bridge
     cueEventID: 656f78s8f9d0n97d
     parameter: BridgeRotate
+    paramObject: {fileID: 0}
+  - time: 1
+    gameObjectName: Canvas/Belt
+    cueEventID: t79ryhfrc98h0y9y7yts0e
+    parameter: 
     paramObject: {fileID: 0}
   Version: 1

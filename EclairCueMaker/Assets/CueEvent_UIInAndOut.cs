@@ -4,13 +4,14 @@ using System.Collections;
 using System;
 using wararyo.EclairCueMaker;
 
+[RequireComponent(typeof(Animator))]
 public class CueEvent_UIInAndOut : CueEventBase {
 
 	private bool isStaged = false;
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<MaskableGraphic>().enabled = false;
+		if(GetComponent<MaskableGraphic>())GetComponent<MaskableGraphic>().enabled = false;
 		ChildIsEnabled = false;
 
 	}
@@ -72,7 +73,7 @@ public class CueEvent_UIInAndOut : CueEventBase {
 		if (isStaged) {//アウトのアニメーション
 			GetComponent<Animator>().Play("Out");
 		} else {//インのアニメーション
-			GetComponent<MaskableGraphic> ().enabled = true;
+			if(GetComponent<MaskableGraphic>())GetComponent<MaskableGraphic>().enabled = true;
 			ChildIsEnabled = true;
 			isStaged = true;
 			GetComponent<Animator>().Play("In");
