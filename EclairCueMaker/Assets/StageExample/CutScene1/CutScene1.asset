@@ -33,14 +33,9 @@ MonoBehaviour:
     cueEventID: 656f78s8f9d0n97d
     parameter: BridgeRotate
     paramObject: {fileID: 0}
-  - time: 1.5
-    gameObjectName: Canvas/Belt
-    cueEventID: t79ryhfrc98h0y9y7yts0e
-    parameter: 
-    paramObject: {fileID: 0}
   - time: 0
-    gameObjectName: Main Camera
-    cueEventID: 897fh6h879t4soioc3rio
-    parameter: False
+    gameObjectName: Owari
+    cueEventID: 9384jfdns38ton92ewhf
+    parameter: 
     paramObject: {fileID: 0}
   Version: 1
