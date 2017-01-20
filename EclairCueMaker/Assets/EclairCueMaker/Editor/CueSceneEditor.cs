@@ -30,6 +30,9 @@ namespace wararyo.EclairCueMaker
 		private bool isEditable = false;
 
         private ReorderableList rawList;
+		private Vector2 rawScrollPos;
+
+		private Vector2 timelineScrollPos;
 
 		const string MessageWhenUnEditable = "GameObjectにCueScenePlayerをアタッチし、CueSceneを指定すると編集できます。";
 
@@ -144,8 +147,17 @@ namespace wararyo.EclairCueMaker
                     GUILayout.Button("Add", EditorStyles.toolbarButton, GUILayout.Width(64));
                     toolbarSpace(paneWidth - 64 - 6);
                     //ここまで256px
-                    EclairGUILayout.Ruler(3.95f, 5.55f);
+					EclairGUILayout.Ruler(timelineScrollPos.x, timelineScrollPos.x + 10);
                 }
+
+				Event evt = Event.current;
+				if (evt.type.Equals (EventType.ScrollWheel)) {
+					timelineScrollPos.x += evt.delta.x;
+					Repaint ();
+				}
+				var horizontalScrollbarRect = new Rect (paneWidth, position.height - 15, position.width - paneWidth, 15);
+
+				timelineScrollPos.x = GUI.HorizontalScrollbar (horizontalScrollbarRect, timelineScrollPos.x, 60, 0, 300);
             }
 
 
@@ -153,7 +165,10 @@ namespace wararyo.EclairCueMaker
             {
 				cueListSerialized.serializedObject.Update ();
 				// リスト・配列の変更可能なリストの表示
-				rawList.DoLayoutList();
+				using (var scrollView = new EditorGUILayout.ScrollViewScope(rawScrollPos)) {
+					rawScrollPos = scrollView.scrollPosition;
+					rawList.DoLayoutList ();
+				}
 				cueListSerialized.serializedObject.ApplyModifiedProperties();
             }
         }
