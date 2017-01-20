@@ -33,6 +33,9 @@ namespace wararyo.EclairCueMaker
 		private Vector2 rawScrollPos;
 
 		private Vector2 timelineScrollPos;
+        private float timelineZoomFactor = 10.0f;//単位はsec
+
+        private float timelineTimeMax = 120;
 
 		const string MessageWhenUnEditable = "GameObjectにCueScenePlayerをアタッチし、CueSceneを指定すると編集できます。";
 
@@ -147,17 +150,28 @@ namespace wararyo.EclairCueMaker
                     GUILayout.Button("Add", EditorStyles.toolbarButton, GUILayout.Width(64));
                     toolbarSpace(paneWidth - 64 - 6);
                     //ここまで256px
-					EclairGUILayout.Ruler(timelineScrollPos.x, timelineScrollPos.x + 10);
+					EclairGUILayout.Ruler(timelineScrollPos.x, timelineScrollPos.x + timelineZoomFactor);
                 }
+
+                //ルーラとグリッド
+
+                var timelineBackGroundRect = new Rect(paneWidth - 1, 36, position.width - paneWidth - 6 + 1, position.height - 36 - 15);
+                EclairGUILayout.TimelineBackground(timelineBackGroundRect, timelineScrollPos.x, timelineScrollPos.x + timelineZoomFactor);
 
 				Event evt = Event.current;
 				if (evt.type.Equals (EventType.ScrollWheel)) {
 					timelineScrollPos.x += evt.delta.x;
 					Repaint ();
 				}
-				var horizontalScrollbarRect = new Rect (paneWidth, position.height - 15, position.width - paneWidth, 15);
+				var horizontalScrollbarRect = new Rect (paneWidth - 1, position.height - 15, position.width - paneWidth + 1, 15);
 
-				timelineScrollPos.x = GUI.HorizontalScrollbar (horizontalScrollbarRect, timelineScrollPos.x, 60, 0, 300);
+				timelineScrollPos.x = GUI.HorizontalScrollbar (horizontalScrollbarRect, timelineScrollPos.x, timelineZoomFactor, -0.2f, timelineTimeMax);
+
+                //タイムライントラック
+
+                EclairGUILayout.TimelineTrack(null, "hogehoge",paneWidth,true);
+                EclairGUILayout.TimelineTrack(null, "fuga",paneWidth,false);
+                EclairGUILayout.TimelineTrack(null, "foobar",paneWidth,true);
             }
 
 
