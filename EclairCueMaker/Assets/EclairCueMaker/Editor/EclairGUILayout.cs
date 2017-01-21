@@ -26,7 +26,7 @@ namespace wararyo.EclairCueMaker
 
         public static void Ruler(Rect rect, float startTime, float endTime)
         {
-            if (rect.height == 1.0f) return;
+            if (rect.height <= 1.0f) return;
 
             var id = GUIUtility.GetControlID(FocusType.Keyboard, rect);
 
@@ -142,8 +142,9 @@ namespace wararyo.EclairCueMaker
 
         #region TimelineTrack
 
-        public static void TimelineTrack(SortedList<float,Cue> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw)
+        public static List<KeyValuePair<float, Cue>> TimelineTrack(List<KeyValuePair<float, Cue>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime)
         {
+            if (absoluteCueList == null) return null;
             EditorGUILayout.LabelField("");
             var rect = GUILayoutUtility.GetLastRect();//既存のGUILayoutを実行しRectだけ盗む
             rect = new Rect(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2);
@@ -151,6 +152,17 @@ namespace wararyo.EclairCueMaker
             if(isOddRaw) EditorGUI.DrawRect(rect, new Color(1, 1, 1, .2f));
             EditorGUI.LabelField(paneRect,gameObjectPath);
 
+            foreach(var acue in absoluteCueList)
+            {
+                if (acue.Value.gameObjectName.Equals(gameObjectPath))//gameObjectName == gameObjectPathとするより微妙に高速かもしれない
+                {
+                    float x = (int)Mathf.LerpUnclamped(paneWidth, rect.width, (acue.Key - startTime) / (endTime - startTime)) - 9;
+                    string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
+                    string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
+                    GUI.DrawTexture(new Rect(x, rect.y + 1, 18, 18), AssetDatabase.LoadAssetAtPath<Texture>(iconPath));
+                }
+            }
+            return absoluteCueList;
         }
 
         #endregion

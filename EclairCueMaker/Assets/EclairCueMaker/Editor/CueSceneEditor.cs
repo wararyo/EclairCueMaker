@@ -10,7 +10,7 @@ namespace wararyo.EclairCueMaker
 	/// </summary>
     public class CueSceneEditor : EditorWindow
     {
-        private int tab = 0;
+        private int tab = 1;
         private int paneWidth = 192;//timelineの左側の幅
 
 		private string sceneName = "";
@@ -53,6 +53,8 @@ namespace wararyo.EclairCueMaker
 			var icon = AssetDatabase.LoadAssetAtPath<Texture> (iconPath);
 
 			window.titleContent = new GUIContent ("CueEditor", icon);
+
+            window.minSize = new Vector2(512, 256);
         }
 
         void OnEnable()
@@ -145,33 +147,41 @@ namespace wararyo.EclairCueMaker
 
             if (tab == 0)//Timelineタブ
             {
+				var horizontalScrollbarRect = new Rect (paneWidth - 1, position.height - 15, position.width - paneWidth + 1, 15);
+                timelineScrollPos.x = GUI.HorizontalScrollbar(horizontalScrollbarRect, timelineScrollPos.x, timelineZoomFactor, -0.2f, timelineTimeMax);
+
+                float startTime = timelineScrollPos.x;
+                float endTime = timelineScrollPos.x + timelineZoomFactor;
+
                 using (var rulerScope = new EditorGUILayout.HorizontalScope("toolbar"))
                 {
                     GUILayout.Button("Add", EditorStyles.toolbarButton, GUILayout.Width(64));
                     toolbarSpace(paneWidth - 64 - 6);
                     //ここまで256px
-					EclairGUILayout.Ruler(timelineScrollPos.x, timelineScrollPos.x + timelineZoomFactor);
+					EclairGUILayout.Ruler(startTime, endTime);
                 }
 
-                //ルーラとグリッド
-
+                //グリッド
                 var timelineBackGroundRect = new Rect(paneWidth - 1, 36, position.width - paneWidth - 6 + 1, position.height - 36 - 15);
-                EclairGUILayout.TimelineBackground(timelineBackGroundRect, timelineScrollPos.x, timelineScrollPos.x + timelineZoomFactor);
-
+                EclairGUILayout.TimelineBackground(timelineBackGroundRect, startTime, endTime);
+                //横スクロールでスクロール
 				Event evt = Event.current;
 				if (evt.type.Equals (EventType.ScrollWheel)) {
 					timelineScrollPos.x += evt.delta.x;
 					Repaint ();
 				}
-				var horizontalScrollbarRect = new Rect (paneWidth - 1, position.height - 15, position.width - paneWidth + 1, 15);
-
-				timelineScrollPos.x = GUI.HorizontalScrollbar (horizontalScrollbarRect, timelineScrollPos.x, timelineZoomFactor, -0.2f, timelineTimeMax);
 
                 //タイムライントラック
-
-                EclairGUILayout.TimelineTrack(null, "hogehoge",paneWidth,true);
-                EclairGUILayout.TimelineTrack(null, "fuga",paneWidth,false);
-                EclairGUILayout.TimelineTrack(null, "foobar",paneWidth,true);
+                var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueScene.cueList);
+                List<string> trackList = new List<string>();
+                foreach (var acue in absoluteCueList)
+                {
+                    if (!trackList.Exists(st => st == acue.Value.gameObjectName))
+                    {
+                        trackList.Add(acue.Value.gameObjectName);
+                        EclairGUILayout.TimelineTrack(absoluteCueList, acue.Value.gameObjectName, paneWidth, (trackList.Count % 2) > 0, startTime, endTime);
+                    }
+                }
             }
 
 
