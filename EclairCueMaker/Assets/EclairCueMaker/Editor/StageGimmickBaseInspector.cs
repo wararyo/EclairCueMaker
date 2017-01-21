@@ -68,5 +68,16 @@ namespace wararyo.EclairCueMaker
 
             base.OnInspectorGUI();
         }
+
+        void OnSceneGUI()
+        {
+            if (stageGimmickBase.target.GetComponent<CueScenePlayer>()) return;
+            Vector3 start = stageGimmickBase.GetComponent<Transform>().position;
+            Vector3 end = stageGimmickBase.target.GetComponent<Transform>().position;
+            Handles.color = new Color(1, 0.8f, 0, 1f);
+            Handles.DrawDottedLine(start, end, 4);
+            Handles.color = new Color(1, 0.8f, 0, 0.5f);
+            Handles.SphereCap(0, end, Quaternion.LookRotation(end - start), 1);
+        }
     }
 }
