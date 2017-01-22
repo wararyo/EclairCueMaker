@@ -33,7 +33,18 @@ namespace wararyo.EclairCueMaker
 		private Vector2 rawScrollPos;
 
 		private Vector2 timelineScrollPos;
-        private float timelineZoomFactor = 10.0f;//単位はsec
+
+		const float timelineZoomFactorMin = 1;
+		const float timelineZoomFactorMax = 60;
+        private float timelineZoomFactor_ = 10.0f;//単位はsec
+		private float timelineZoomFactor{
+			get{
+				return timelineZoomFactor_;
+			}
+			set{
+				timelineZoomFactor_ = Mathf.Clamp (value, timelineZoomFactorMin, timelineZoomFactorMax);
+			}
+		}
 
         private float timelineTimeMax = 120;
 
@@ -147,8 +158,14 @@ namespace wararyo.EclairCueMaker
 
             if (tab == 0)//Timelineタブ
             {
-				var horizontalScrollbarRect = new Rect (paneWidth - 1, position.height - 15, position.width - paneWidth + 1, 15);
+				var horizontalScrollbarRect = new Rect (paneWidth - 1, position.height - 15, position.width - paneWidth + 1 - 30, 15);
+				var zoomInButtonRect = new Rect (position.width - 30, position.height - 15, 15, 15);
+				var zoomOutButtonRect = new Rect (position.width - 15, position.height - 15, 15, 15);
                 timelineScrollPos.x = GUI.HorizontalScrollbar(horizontalScrollbarRect, timelineScrollPos.x, timelineZoomFactor, -0.2f, timelineTimeMax);
+				if (GUI.Button (zoomInButtonRect, "+", "OL Plus"))
+					timelineZoomFactor -= 1.0f;
+				if (GUI.Button (zoomOutButtonRect, "-", "OL Minus"))
+					timelineZoomFactor += 1.0f;
 
                 float startTime = timelineScrollPos.x;
                 float endTime = timelineScrollPos.x + timelineZoomFactor;
@@ -167,9 +184,15 @@ namespace wararyo.EclairCueMaker
                 //横スクロールでスクロール
 				Event evt = Event.current;
 				if (evt.type.Equals (EventType.ScrollWheel)) {
-					timelineScrollPos.x += evt.delta.x;
-					Repaint ();
+					if (evt.shift) {
+						timelineZoomFactor += (evt.delta.x + evt.delta.y) / 4;
+						Repaint ();
+					} else {
+						timelineScrollPos.x += (evt.delta.x + evt.delta.y) * timelineZoomFactor / 24;
+						Repaint ();
+					}
 				}
+
 
                 //タイムライントラック
                 var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueScene.cueList);
