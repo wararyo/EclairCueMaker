@@ -36,7 +36,7 @@ namespace wararyo.EclairCueMaker
 
 		const float timelineZoomFactorMin = 1;
 		const float timelineZoomFactorMax = 60;
-        private float timelineZoomFactor_ = 10.0f;//単位はsec
+        private float timelineZoomFactor_ = 8.0f;//単位はsec
 		private float timelineZoomFactor{
 			get{
 				return timelineZoomFactor_;

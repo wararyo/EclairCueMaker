@@ -157,9 +157,7 @@ namespace wararyo.EclairCueMaker
                 if (acue.Value.gameObjectName.Equals(gameObjectPath))//gameObjectName == gameObjectPathとするより微妙に高速かもしれない
                 {
                     float x = (int)Mathf.LerpUnclamped(paneWidth, rect.width, (acue.Key - startTime) / (endTime - startTime)) - 9;
-                    string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
-                    string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
-                    GUI.DrawTexture(new Rect(x, rect.y + 1, 18, 18), AssetDatabase.LoadAssetAtPath<Texture>(iconPath));
+					CueIcon(new Rect(x, rect.y + 1, 18, 18), acue.Value);
                 }
             }
             return absoluteCueList;
@@ -167,10 +165,16 @@ namespace wararyo.EclairCueMaker
 
         #endregion
 
-        #region HierarchyGameObjectField
+        #region CueIcon
 
-        public static void HierarchyGameObjectField(Rect rect, GameObject go){
-
+		public static void CueIcon(Rect rect, Cue cue){
+			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
+			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
+			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(iconPath));
+			if (Event.current.type == EventType.MouseDown) {
+				if(rect.Contains(Event.current.mousePosition))
+					PopupWindow.Show (rect, new CuePopupWindow(cue));
+			}
         }
 
         #endregion
@@ -187,4 +191,34 @@ namespace wararyo.EclairCueMaker
 
         }
     }
+
+	public class CuePopupWindow : PopupWindowContent
+	{
+		Cue cue;
+		public CuePopupWindow(Cue c){
+			cue = c;
+		}
+
+		public override void OnGUI (Rect rect)
+		{
+			EditorGUILayout.LabelField (cue.gameObjectName + ":" + cue.parameter);
+			//EditorGUI.PropertyField(rect, new SerializedProperty(cue),true);
+		}
+
+		public override void OnOpen ()
+		{
+			Debug.Log ("表示するときに呼び出される");
+		}
+
+		public override void OnClose ()
+		{
+			Debug.Log ("閉じるときに呼び出される");
+		}
+
+		public override Vector2 GetWindowSize ()
+		{
+			//Popup のサイズ
+			return new Vector2 (376, 38);
+		}
+	}
 }
