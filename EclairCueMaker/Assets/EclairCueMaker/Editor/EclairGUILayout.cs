@@ -207,12 +207,12 @@ namespace wararyo.EclairCueMaker
 
 		public override void OnOpen ()
 		{
-			Debug.Log ("表示するときに呼び出される");
+			//Debug.Log ("表示するときに呼び出される");
 		}
 
 		public override void OnClose ()
 		{
-			Debug.Log ("閉じるときに呼び出される");
+			//Debug.Log ("閉じるときに呼び出される");
 		}
 
 		public override Vector2 GetWindowSize ()
