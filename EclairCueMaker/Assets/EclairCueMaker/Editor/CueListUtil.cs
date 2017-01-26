@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 
 namespace wararyo.EclairCueMaker
@@ -6,14 +7,15 @@ namespace wararyo.EclairCueMaker
 
     public static class CueListUtil
     {
-        public static List<KeyValuePair<float, Cue>> GenerateAbsoluteCueList(List<Cue> cueList)
+		public static List<KeyValuePair<float, SerializedProperty>> GenerateAbsoluteCueList(SerializedProperty cueListSerialized)
         {
-            List<KeyValuePair<float, Cue>> absoluteCueList = new List<KeyValuePair<float, Cue>>();
+			var absoluteCueList = new List<KeyValuePair<float, SerializedProperty>>();
             float sum = 0;
-            foreach (Cue c in cueList)
+			for(int i=0;i < cueListSerialized.arraySize;i++)
             {
-                sum += c.time;
-                absoluteCueList.Add(new KeyValuePair<float,Cue>(sum, c));
+				var cueSerialized = cueListSerialized.GetArrayElementAtIndex (i);
+				sum += cueSerialized.FindPropertyRelative("time").floatValue;
+				absoluteCueList.Add(new KeyValuePair<float,SerializedProperty>(sum, cueSerialized));
             }
             return absoluteCueList;
         }

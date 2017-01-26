@@ -193,18 +193,22 @@ namespace wararyo.EclairCueMaker
 					}
 				}
 
+				cueListSerialized.serializedObject.Update ();
 
                 //タイムライントラック
-                var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueScene.cueList);
+				var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueListSerialized);
                 List<string> trackList = new List<string>();
                 foreach (var acue in absoluteCueList)
                 {
-                    if (!trackList.Exists(st => st == acue.Value.gameObjectName))
+					string gameObjectName = acue.Value.FindPropertyRelative ("gameObjectName").stringValue;
+					if (!trackList.Exists(st => st == gameObjectName))
                     {
-                        trackList.Add(acue.Value.gameObjectName);
-                        EclairGUILayout.TimelineTrack(absoluteCueList, acue.Value.gameObjectName, paneWidth, (trackList.Count % 2) > 0, startTime, endTime);
+						trackList.Add(gameObjectName);
+						EclairGUILayout.TimelineTrack(absoluteCueList, gameObjectName, paneWidth, (trackList.Count % 2) > 0, startTime, endTime);
                     }
                 }
+
+				cueListSerialized.serializedObject.ApplyModifiedProperties();
             }
 
 

@@ -142,7 +142,7 @@ namespace wararyo.EclairCueMaker
 
         #region TimelineTrack
 
-        public static List<KeyValuePair<float, Cue>> TimelineTrack(List<KeyValuePair<float, Cue>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime)
+		public static List<KeyValuePair<float, SerializedProperty>> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime)
         {
             if (absoluteCueList == null) return null;
             EditorGUILayout.LabelField("");
@@ -154,7 +154,7 @@ namespace wararyo.EclairCueMaker
 
             foreach(var acue in absoluteCueList)
             {
-                if (acue.Value.gameObjectName.Equals(gameObjectPath))//gameObjectName == gameObjectPathとするより微妙に高速かもしれない
+				if (acue.Value.FindPropertyRelative("gameObjectName").stringValue.Equals(gameObjectPath))//gameObjectName == gameObjectPathとするより微妙に高速かもしれない
                 {
                     float x = (int)Mathf.LerpUnclamped(paneWidth, rect.width, (acue.Key - startTime) / (endTime - startTime)) - 9;
 					CueIcon(new Rect(x, rect.y + 1, 18, 18), acue.Value);
@@ -167,13 +167,13 @@ namespace wararyo.EclairCueMaker
 
         #region CueIcon
 
-		public static void CueIcon(Rect rect, Cue cue){
+		public static void CueIcon(Rect rect, SerializedProperty cueSerialized){
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
 			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(iconPath));
 			if (Event.current.type == EventType.MouseDown) {
 				if(rect.Contains(Event.current.mousePosition))
-					PopupWindow.Show (rect, new CuePopupWindow(cue));
+					PopupWindow.Show (rect, new CuePopupWindow(cueSerialized));
 			}
         }
 
@@ -194,15 +194,15 @@ namespace wararyo.EclairCueMaker
 
 	public class CuePopupWindow : PopupWindowContent
 	{
-		Cue cue;
-		public CuePopupWindow(Cue c){
-			cue = c;
+		SerializedProperty cueSerialized;
+		public CuePopupWindow(SerializedProperty cue){
+			cueSerialized = cue;
 		}
 
 		public override void OnGUI (Rect rect)
 		{
-			EditorGUILayout.LabelField (cue.gameObjectName + ":" + cue.parameter);
-			//EditorGUI.PropertyField(rect, new SerializedProperty(cue),true);
+			//EditorGUILayout.LabelField (cue.gameObjectName + ":" + cue.parameter);
+			EditorGUI.PropertyField(rect, cueSerialized ,true);
 		}
 
 		public override void OnOpen ()
@@ -218,7 +218,7 @@ namespace wararyo.EclairCueMaker
 		public override Vector2 GetWindowSize ()
 		{
 			//Popup のサイズ
-			return new Vector2 (376, 38);
+			return new Vector2 (386, 38);
 		}
 	}
 }
