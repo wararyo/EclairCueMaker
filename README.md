@@ -106,8 +106,42 @@ CueSceneを再生させるためのCueEvent、"CueEvent\_PlayCueScene"を用意�
 以上で、ステージギミックを作用させると、指定した`CueScene`が再生されます。
 
 ## CueSceneEditorでCueSceneを編集する
-EclairCueMakerの要となる、`CueSceneEditor`の使い方です。
-現在はRaw表示での編集にのみ対応しています。
+EclairCueMakerの要となる、CueSceneEditorの使い方です。
+編集したいCueSceneをCueEventPlayerにセットし、CueEventPlayerがアタッチされているゲームオブジェクトを選択すると、そのCueSceneが編集可能となります。
+
+`CueSceneEditor`には、CueSceneを表示する2つの方法があります。  
+一つがTimeline表示  
+<img src="Images/CueSceneEditorTimeline.png" width="640px" />
+
+もう一つがRaw表示です。  
+<img src="Images/CueSceneExample.png" width="640px" />
+
+CueSceneの編集に関しては、現在、Raw表示でのみ対応しています。
+
+### Raw表示での編集
+CueSceneに含まれているCueが上から下へ時系列で並んでいます。
+右下の + ボタンを押すと、新しいCueを作成します。
+
+<img src="Images/CueProperty.png" width="480px" />  
+Cue
+
+"Duration"は、一つ前に実行されたCueからの待機時間を示しています。
+Durationより左の領域でCueEventを指定します。
+左上に位置しているのが、対象となるゲームオブジェクトです。
+このゲームオブジェクトは、CueScenePlayerがアタッチされているゲームオブジェクトと同じシーンに含まれている必要があり、かつ、CueEventコンポーネントをアタッチしている必要があります。
+
+その右は、対象にCueEventコンポーネントが複数アタッチされていた場合に、どのCueEventを実行するかを指定するプルダウンメニューです。
+指定した対象が、CueEventコンポーネントを一つもアタッチしていない場合は表示されません。
+
+<img src="Images/CuePropertyWithNoCueEvent.png" width="480px" />  
+
+その下で引数、すなわちパラメーターを指定します。
+指定したCueEventが引数を要求するものである場合、引数の種類に応じたGUI表示されます。
+何も表示されない場合は、そのCueEventが引数を要求していないことを意味します。
+
+<img src="Images/CuePropertyWithBoolParameter.png" width="480px" />  
+Bool型の引数を要求するCueEvent ChangeAnimatorEnabledの例
+
 
 ## CueEventを自作する(プログラマー向け)
 
