@@ -46,7 +46,7 @@ Createメニュー>EclairCueSceneを選択し、新たなCueSceneファイルを
 処理を時間差で実行したいUnityシーンを開き、好きなゲームオブジェクトに`CueScenePlayer`をアタッチします。
 `Manager`といった名前の空のゲームオブジェクトを作成し、そこにアタッチする方法をおすすめしています。
 さらに`CueScenePlayer`コンポーネント内の"Cue Scene"パラメーターに、先ほど作成した`CueScene`をアタッチします。
-<img src="Images/CueScenePlayer.png" width="320px" />
+<img src="Images/CueScenePlayer.png" width="320px" />  
 (Cue Event_Play Cue Sceneについては後ほど説明します。)
 
 Play On Awakeをオンにした場合は、Unityシーンを開いたと同時に`CueScene`の再生を開始します。
@@ -62,15 +62,15 @@ Windowメニュー>EclairCueEditorを選択し`CueSceneEditor`を開きます。
 
 <img src="Images/EclairCueEditor.png" width="256px" />
 
-CueSceneEditorでCueSceneを編集するに基づき、CueSceneを編集します。
+[CueSceneEditorでCueSceneを編集する](#CueSceneEditorでCueSceneを編集する)に基づき、CueSceneを編集します。
 
-<img src="Images/CueSceneExample.png" width="640px" />
+<img src="Images/CueSceneExample.png" width="640px" />  
 編集されたCueSceneの例
 
 Play On Awakeがオンである場合は、この時点で、
 Unityの再生ボタンを押すとCueSceneの再生が開始します。
 Play On Awakeがオフである場合はさらに、
-ステージギミックにより時間差で処理を実行するなどの方法により、CueSceneを再生する命令を出す必要があります。
+[ステージギミックにより時間差で処理を実行する](#ステージギミックにより時間差で処理を実行する)などの方法により、CueSceneを再生する命令を出す必要があります。
 
 ### ステージギミックにより処理を実行する
 #### 1.ステージギミックPrefabをプログラマーに作ってもらう
@@ -79,7 +79,7 @@ Play On Awakeがオフである場合はさらに、
 「`StageGimmickBase`継承クラスがアタッチされたPrefab」と定義しておきます。
 #### 2.ステージギミックPrefabを配置する
 #### 3.ステージギミックとCueEventを紐付けする
-<img src="Images/StageGimmickExample.png" width="320px" />
+<img src="Images/StageGimmickExample.png" width="320px" />  
 BridgeゲームオブジェクトのCueEvent_PlayAnimatorStateを指定した例
 
 `CueSceneEditor`で`CueEvent`を指定するときと同様に`CueEvent`の指定を行います。
@@ -95,6 +95,7 @@ CueSceneを再生させるためのCueEvent、"CueEvent\_PlayCueScene"を用意�
 
 #### 1.ManagerにCueEvent\_PlayCueSceneをアタッチする
 <img src="Images/CueScenePlayer.png" width="320px" />
+
 `CueScenePlayer`がアタッチされているゲームオブジェクトに、CueEvent\_PlayCueSceneをアタッチします。
 
 #### 2.ステージギミックのCueEventにCueEvent\_PlayCueSceneを指定する
