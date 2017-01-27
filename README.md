@@ -41,11 +41,13 @@ Unityシーン内の実際のゲームオブジェクトにアタッチして使
 ### 時間差で処理を実行する
 #### 1.CueSceneを作成
 Createメニュー>EclairCueSceneを選択し、新たなCueSceneファイルを作成します。
+
 <img src="Images/EclairCueScene.png" width="256px" />
 #### 2.CueScenePlayerをアタッチ
 処理を時間差で実行したいUnityシーンを開き、好きなゲームオブジェクトに`CueScenePlayer`をアタッチします。
 `Manager`といった名前の空のゲームオブジェクトを作成し、そこにアタッチする方法をおすすめしています。
 さらに`CueScenePlayer`コンポーネント内の"Cue Scene"パラメーターに、先ほど作成した`CueScene`をアタッチします。
+
 <img src="Images/CueScenePlayer.png" width="320px" />  
 (Cue Event_Play Cue Sceneについては後ほど説明します。)
 
@@ -62,7 +64,7 @@ Windowメニュー>EclairCueEditorを選択し`CueSceneEditor`を開きます。
 
 <img src="Images/EclairCueEditor.png" width="256px" />
 
-[CueSceneEditorでCueSceneを編集する](#CueSceneEditorでCueSceneを編集する)に基づき、CueSceneを編集します。
+[CueSceneEditorでCueSceneを編集する](#cuesceneeditorでcuesceneを編集する)に基づき、CueSceneを編集します。
 
 <img src="Images/CueSceneExample.png" width="640px" />  
 編集されたCueSceneの例
