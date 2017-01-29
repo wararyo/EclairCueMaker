@@ -136,7 +136,7 @@ Durationより左の領域でCueEventを指定します。
 <img src="Images/CuePropertyWithNoCueEvent.png" width="480px" />  
 
 その下で引数、すなわちパラメーターを指定します。
-指定したCueEventが引数を要求するものである場合、引数の種類に応じたGUI表示されます。
+指定したCueEventが引数を要求するものである場合、引数の種類に応じたGUIが表示されます。
 何も表示されない場合は、そのCueEventが引数を要求していないことを意味します。
 
 <img src="Images/CuePropertyWithBoolParameter.png" width="480px" />  
@@ -144,7 +144,92 @@ Bool型の引数を要求するCueEvent ChangeAnimatorEnabledの例
 
 
 ## CueEventを自作する(プログラマー向け)
+CueEventコンポーネントの実態は、`CueEventBase`抽象クラスを継承したクラスです。
+`CueEventBase`はMonoBehaviourを継承しているので、日頃スクリプトを書くときと同じ感覚で書いて構いません。違うのは、いくつか固有の変数が定義してあるということです。
 
-## ステージギミックを自作する(プログラマー向け)
+### テンプレートを修正して作成する
+
+CueEventのテンプレートを用意しました。これを複製してCueEventを作成する方法が最も簡単かと思います。
+CueEventのテンプレートを以下に示します。これは、Assets/EclairCueMaker/CueEvent_Template.csと同等の内容です。
+
+``` C#
+using UnityEngine;
+using System.Collections;
+using wararyo.EclairCueMaker;
+using System;
+
+public class CueEvent_Template : CueEventBase {
+
+    public override string EventName
+    {
+        get
+        {
+            return "**Input name of this CueEvent here**";
+        }
+    }
+    
+    public override string EventID
+    {
+        get
+        {
+            return "324a94shtj65y5u4l";
+        }
+    }
+
+    public override Type ParamType
+    {
+        get
+        {
+            return typeof(void);
+        }
+    }
+
+    public override void Cue(object param)
+    {
+        //ここに任意の処理を記述
+    }
+}
+
+```
+
+まず、これをコピー・ペーストするか、Assets/EclairCueMaker/CueEvent\_Template.csをUnityエディター上で複製するなどして、CueEvent\_\*.csというスクリプトを作成します。(\*にはお好きなキーワードが入ります。素敵な名前をつけてください)  
+作成するフォルダーはどこでも構いません。
+
+次に、スクリプトの編集に入ります。
+編集する箇所は
+
+* クラス名
+* EventNameプロパティ
+* EventIDプロパティ
+* ParamTypeプロパティ
+* Cueメソッド
+
+の5箇所です。
+
+まずクラス名ですが、これはUnityの規則により、ファイル名と同じにしてください。
+
+EventNameは、CueEventの名前です。Cue編集画面のCueEventリストに表示されます。ファイル名と大体似た名前にしてください。
+
+EventIDは、CueEvent同士を区別する識別子です。ユニークな文字列である(一意的で他と被らない文字列である)必要があります。キーボードをガチャガチャして入力するのがおすすめです。
+
+ParamTypeは、引数の型です。あなたが作るCueEventで引数を要求したい場合は、その引数の型を入力してください。ただし、対応している引数は現時点で多くなく、例えば`Vector3`などは対応していません。
+引数を要求しない場合は、`void`型を指定してください。
+
+Cueメソッドは、CueEventが実行された時に実際に実行される処理です。お好きに書いてください。
+引数のparamには、あなたがParamTypeで指定した型の値が入っています。object型(UnityEngine.Object型ではない)ですので、ParamTypeで指定したのと同じ型にキャストしてお使いください。
+
+以上を定義さえすれば、他は好き放題書くことができます。
+
+### CueEventを作る上で守って欲しいこと
+
+以上のように、CueEventにはかなりの自由度が確保されていますが、CueEventという概念の一貫性を守るため、守って欲しい規則があります。
+それが、
+
+**そのCueEventがアタッチされているゲームオブジェクト以外のゲームオブジェクトには、
+可能な限り影響を与えない**
+
+です。
+
+## ステージギミックPrefabを自作する(プログラマー向け)
 
 ## CueScenePlayerをカスタマイズする(上級)
