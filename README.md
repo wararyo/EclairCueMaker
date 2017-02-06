@@ -229,7 +229,65 @@ Cueメソッドは、CueEventが実行された時に実際に実行される処
 可能な限り影響を与えない**
 
 です。
+Unity標準のUnityEventを用いずCueEventという概念を作った一番の理由が、プログラムが実行される流れの見通しを良くすることです。
+CueEventが他のゲームオブジェクトに影響を与えてしまうようでは、[任意のメソッドを実行できるようにしなかった理由](#任意のメソッドを実行できるようにしなかった理由)で述べたように「どこから実行されてるのかわからない」状態に陥り、CueEventのうまみが失われてしまいます。
 
 ## ステージギミックPrefabを自作する(プログラマー向け)
+ステージギミックPrefabとは、`StageGimmickBase`継承クラスがアタッチされたPrefabという意味です。
+プログラマーがこれを作成することで、非プログラマーのメンバーにもステージギミックを作成させることが可能になります。
 
-## CueScenePlayerをカスタマイズする(上級)
+ステージギミックPrefabの例としては、足で踏むと反応する感圧スイッチ、プレイヤーが通ると何かが起こる通過ポイントなどが考えられます。
+
+<img src="Images/StageGimmickFootSwitch.png" width="240px" />  
+感圧スイッチ
+
+<img src="Images/StageGimmickEventWay.png" width="240px" />  
+通過ポイント
+
+### 主な流れ
+
+1. 新しいスクリプトを作成し、wararyo.EclairCueMaker.StageGimmickBaseクラスを継承する(wararyo.EclairCueMakerは名前空間です)
+2. ステージギミックの挙動を通常のスクリプトと同様に記述した後、そのステージギミックが使用されたタイミングで`DispatchEvent()`メソッドを実行する
+3. そのスクリプトをゲームオブジェクトにアタッチする
+4. Prefab化する
+
+### 自動的に提供される機能
+
+`StageGimmickBase`継承クラスをゲームオブジェクトにアタッチすることで自動的に提供される機能があります。
+
+#### ステージギミックであることを示すアイコンをSceneビューに表示する
+稲妻アイコン<img src="Images/Event.png" width="32px" style="background-color:#00000030;"/>が表示されます。
+
+#### 実行するCueEventを指定する領域をインスペクターに表示する
+<img src="Images/CueEventCueScenePlay.png" width="320px" />  
+CueSceneEditorでCueEventを指定するときと同等のGUIがインスペクターに表示されます。
+通常のスクリプトと同じく、シリアライズ可能な変数(publicな変数など)を宣言した場合のGUIも表示されます。
+
+#### ステージギミックのターゲットをSceneビュー上で示す
+<img src="Images/StageGimmickTargetSceneGUI.png" width="320px" />  
+ステージギミックPrefabとそのターゲットとの間に線が表示されます。
+
+### サンプル
+"Player"タグが割り当てられた物体が通過した時にCueEventを発行するステージギミック"EventWay"内のEventWayスクリプトの内容を簡略化したものです。
+フルバージョンのEventWayはリポジトリ内のStageExampleを参照ください。
+
+``` C#
+using UnityEngine;
+using System.Collections;
+using wararyo.EclairCueMaker;
+using System;
+
+public class EventWay : StageGimmickBase {
+
+	private void OnTriggerEnter(Collider collider){
+		if (collider.gameObject.tag == "Player") {
+			DispatchEvent ();
+		}
+	}
+}
+```
+
+## CueScenePlayerをカスタマイズする(プログラマー向け上級)
+`CueScenePlayer`クラスを継承することで、独自のCueScenePlayerを作成することができます。
+OnCursorChangedメソッドをoverrideすることで、CueEventが実行された時に任意の処理を実行することができます。
+詳しい説明はしないので、自分でCueScenePlayerのソースコードを見て頑張ってください。
