@@ -203,6 +203,7 @@ namespace wararyo.EclairCueMaker
 		{
 			//EditorGUILayout.LabelField (cue.gameObjectName + ":" + cue.parameter);
 			EditorGUI.PropertyField(rect, cueSerialized ,true);
+			cueSerialized.serializedObject.ApplyModifiedProperties ();
 		}
 
 		public override void OnOpen ()

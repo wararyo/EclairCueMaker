@@ -208,7 +208,7 @@ namespace wararyo.EclairCueMaker
                     }
                 }
 
-				cueListSerialized.serializedObject.ApplyModifiedProperties();
+				//cueListSerialized.serializedObject.ApplyModifiedProperties();
             }
 
 
