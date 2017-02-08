@@ -142,7 +142,18 @@ namespace wararyo.EclairCueMaker
 
         #region TimelineTrack
 
-		public static List<KeyValuePair<float, SerializedProperty>> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime)
+		/// <summary>
+		/// Draw Timeline GUI.
+		/// </summary>
+		/// <returns>SelectedCueList.</returns>
+		/// <param name="absoluteCueList">Absolute cue list.</param>
+		/// <param name="gameObjectPath">Game object path.</param>
+		/// <param name="paneWidth">Pane width.</param>
+		/// <param name="isOddRaw">If set to <c>true</c> is odd raw.</param>
+		/// <param name="startTime">Start time.</param>
+		/// <param name="endTime">End time.</param>
+		/// <param name="selectedCueList">Selected cue list.</param>
+		public static List<SerializedProperty> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime,List<SerializedProperty> selectedCueList)
         {
             if (absoluteCueList == null) return null;
             EditorGUILayout.LabelField("");
@@ -167,13 +178,14 @@ namespace wararyo.EclairCueMaker
 
         #region CueIcon
 
-		public static void CueIcon(Rect rect, SerializedProperty cueSerialized){
+		public static void CueIcon(Rect rect, SerializedProperty cueSerialized, bool selected){
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
-			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(iconPath));
+			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(selected?iconSelectedPath:iconPath));
 			if (Event.current.type == EventType.MouseDown) {
 				if(rect.Contains(Event.current.mousePosition))
 					PopupWindow.Show (rect, new CuePopupWindow(cueSerialized));
+				
 			}
         }
 
