@@ -28,7 +28,7 @@ namespace wararyo.EclairCueMaker
 
         public virtual void OnDrawGizmos()
         {
-            Gizmos.DrawIcon(transform.position + Vector3.up * 0.5f, "Event.png", true);
+            Gizmos.DrawIcon(transform.position + Vector3.up * 0.5f, "StageGimmick.png", true);
         }
     }
 }
