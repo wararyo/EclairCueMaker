@@ -168,40 +168,87 @@ namespace wararyo.EclairCueMaker
 				if (acue.Value.FindPropertyRelative("gameObjectName").stringValue.Equals(gameObjectPath))//gameObjectName == gameObjectPathとするより微妙に高速かもしれない
                 {
                     float x = (int)Mathf.LerpUnclamped(paneWidth, rect.width, (acue.Key - startTime) / (endTime - startTime)) - 9;
-					CueIcon(new Rect(x, rect.y + 1, 18, 18), acue.Value);
+					selectedCueList = CueIcon(new Rect(x, rect.y + 1, 18, 18), acue.Value,selectedCueList);
                 }
             }
-            return absoluteCueList;
+            return selectedCueList;
         }
 
         #endregion
 
         #region CueIcon
 
-		public static void CueIcon(Rect rect, SerializedProperty cueSerialized, bool selected){
+        //実際にドラッグする処理はCueSceneEditorで書くことにしたよ
+        public static System.Action CueIconDragStart;
+        public static System.Action CueIconDragEnd;
+        public static bool isCueIconDragging = false;
+
+		public static List<SerializedProperty> CueIcon(Rect rect, SerializedProperty cueSerialized, List<SerializedProperty> selectedCueList)
+        {
+            bool selected = selectedCueList.Exists(x => x.propertyPath == cueSerialized.propertyPath);
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
 			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(selected?iconSelectedPath:iconPath));
-			if (Event.current.type == EventType.MouseDown) {
-				if(rect.Contains(Event.current.mousePosition))
-					PopupWindow.Show (rect, new CuePopupWindow(cueSerialized));
-				
-			}
+            if (Event.current.type == EventType.MouseDown)
+            {
+                if (rect.Contains(Event.current.mousePosition))
+                {
+                    if (selected)
+                    {
+                        if(Event.current.clickCount == 1)
+                        {
+                            if (Event.current.shift)
+                            {
+                                selectedCueList.Remove(selectedCueList.Find(x => x.propertyPath == cueSerialized.propertyPath));
+                            }
+                            else
+                            {
+                                selectedCueList.Clear();
+                                selectedCueList.Add(cueSerialized);
+                            }
+                        }
+                        else if (Event.current.clickCount == 2)
+                        {
+                            Event.current.clickCount = 0;
+                            if (!Event.current.shift) selectedCueList.Clear();
+                            selectedCueList.Add(cueSerialized);
+                            PopupWindow.Show(rect, new CuePopupWindow(cueSerialized));
+                        }
+                    }
+                    else
+                    {
+                        if (!Event.current.shift) selectedCueList.Clear();
+                        selectedCueList.Add(cueSerialized);
+                        Event.current.clickCount = 0;
+                    }
+                    //Debug.Log("SelectedCueCursor:" + selectedCueList.Count);
+                }
+            }
+            else if(Event.current.type == EventType.MouseDrag)
+            {
+                if (rect.Contains(Event.current.mousePosition))
+                {
+                    if (isCueIconDragging) ;
+                    else
+                    {
+                        isCueIconDragging = true;
+                        CueIconDragStart();
+                    }
+                }
+            }
+            else if(Event.current.type == EventType.MouseUp)
+            {
+                if (isCueIconDragging)
+                {
+                    isCueIconDragging = false;
+                    CueIconDragEnd();
+                }
+            }
+            return selectedCueList;
         }
 
         #endregion
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 
 	public class CuePopupWindow : PopupWindowContent

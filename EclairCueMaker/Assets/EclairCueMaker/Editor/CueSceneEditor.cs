@@ -48,6 +48,11 @@ namespace wararyo.EclairCueMaker
 
         private float timelineTimeMax = 120;
 
+        private List<SerializedProperty> selectedCueList;
+        private Vector2 cueIconDragStartedMousePos;
+
+        private float timelineSnapSpan = 0.05f;
+
 		const string MessageWhenUnEditable = "GameObjectにCueScenePlayerをアタッチし、CueSceneを指定すると編集できます。";
 
         [System.NonSerialized]
@@ -71,7 +76,9 @@ namespace wararyo.EclairCueMaker
         void OnEnable()
         {
             //cueList = new ReorderableList(seria, Cue);
-			Selection.selectionChanged = OnSelectionChanged;
+            Selection.selectionChanged = OnSelectionChanged;
+            EclairGUILayout.CueIconDragStart += OnCueIconDragStart;
+            EclairGUILayout.CueIconDragEnd += OnCueIconDragEnd;
 			OnSelectionChanged ();
         }
 
@@ -105,6 +112,7 @@ namespace wararyo.EclairCueMaker
 
 		void OnCueSceneChanged(){
             cueListSerialized = new SerializedObject(cueScene).FindProperty("cueList");
+            selectedCueList = new List<SerializedProperty>();
 
             rawList = new ReorderableList(cueListSerialized.serializedObject, cueListSerialized);
             rawList.elementHeight = 38;
@@ -195,16 +203,45 @@ namespace wararyo.EclairCueMaker
 
 				cueListSerialized.serializedObject.Update ();
 
-                //タイムライントラック
-				var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueListSerialized);
+                var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueListSerialized);
+
+                //CueIconのドラッグ
+                if (EclairGUILayout.isCueIconDragging)
+                {
+                    float delta = (Event.current.mousePosition.x - cueIconDragStartedMousePos.x) * getTimePerPixel(timelineBackGroundRect.width,timelineZoomFactor);
+                    foreach(SerializedProperty cue in selectedCueList)
+                    {
+                        //absoluteCueList.Find(x => x.Value.)
+                    }
+                }
+
+                //タイムライントラック描画
                 List<string> trackList = new List<string>();
                 foreach (var acue in absoluteCueList)
                 {
+                    bool isSelectionChanged = false;
 					string gameObjectName = acue.Value.FindPropertyRelative ("gameObjectName").stringValue;
 					if (!trackList.Exists(st => st == gameObjectName))
                     {
 						trackList.Add(gameObjectName);
-						EclairGUILayout.TimelineTrack(absoluteCueList, gameObjectName, paneWidth, (trackList.Count % 2) > 0, startTime, endTime);
+                        var selectedCueListTemp = EclairGUILayout.TimelineTrack(absoluteCueList, gameObjectName, paneWidth, (trackList.Count % 2) > 0, startTime, endTime, selectedCueList);
+                        if (selectedCueListTemp.Equals( selectedCueList))
+                        {
+                            selectedCueList = selectedCueListTemp;
+                            isSelectionChanged = true;
+                        }
+                    }
+                    if (isSelectionChanged) Repaint();
+                    else
+                    {
+                        if(Event.current.type == EventType.MouseDown)
+                        {
+                            if (position.Contains(Event.current.mousePosition))
+                            {
+                                selectedCueList.Clear();
+                                Repaint();
+                            }
+                        }
                     }
                 }
 
@@ -222,6 +259,25 @@ namespace wararyo.EclairCueMaker
 				}
 				cueListSerialized.serializedObject.ApplyModifiedProperties();
             }
+        }
+
+        private void OnCueIconDragStart()
+        {
+            wantsMouseMove = true;
+            cueIconDragStartedMousePos = Event.current.mousePosition;
+        }
+        private void OnCueIconDragEnd()
+        {
+            wantsMouseMove = false;
+        }
+
+        /// <summary>
+        /// 画面上の1ピクセルが何秒に相当するかを求めます。
+        /// </summary>
+        /// <returns></returns>
+        private static float getTimePerPixel(float width, float zoomFactor)
+        {
+            return zoomFactor / width;
         }
 
         private void toolbarSpace(int width = 6)
