@@ -153,7 +153,7 @@ namespace wararyo.EclairCueMaker
 		/// <param name="startTime">Start time.</param>
 		/// <param name="endTime">End time.</param>
 		/// <param name="selectedCueList">Selected cue list.</param>
-		public static List<SerializedProperty> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime,List<SerializedProperty> selectedCueList)
+		public static List<string> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime,List<string> selectedCueList)
         {
             if (absoluteCueList == null) return null;
             EditorGUILayout.LabelField("");
@@ -183,9 +183,9 @@ namespace wararyo.EclairCueMaker
         public static System.Action CueIconDragEnd;
         public static bool isCueIconDragging = false;
 
-		public static List<SerializedProperty> CueIcon(Rect rect, SerializedProperty cueSerialized, List<SerializedProperty> selectedCueList)
+		public static List<string> CueIcon(Rect rect, SerializedProperty cueSerialized, List<string> selectedCueList)
         {
-            bool selected = selectedCueList.Exists(x => x.propertyPath == cueSerialized.propertyPath);
+			bool selected = selectedCueList.Exists(x => x == cueSerialized.FindPropertyRelative("UUID").stringValue);
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
 			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(selected?iconSelectedPath:iconPath));
@@ -199,26 +199,26 @@ namespace wararyo.EclairCueMaker
                         {
                             if (Event.current.shift)
                             {
-                                selectedCueList.Remove(selectedCueList.Find(x => x.propertyPath == cueSerialized.propertyPath));
+								selectedCueList.Remove(selectedCueList.Find(x => x == cueSerialized.FindPropertyRelative("UUID").stringValue));
                             }
                             else
                             {
                                 selectedCueList.Clear();
-                                selectedCueList.Add(cueSerialized);
+								selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
                             }
                         }
                         else if (Event.current.clickCount == 2)
                         {
                             Event.current.clickCount = 0;
                             if (!Event.current.shift) selectedCueList.Clear();
-                            selectedCueList.Add(cueSerialized);
+							selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
                             PopupWindow.Show(rect, new CuePopupWindow(cueSerialized));
                         }
                     }
                     else
                     {
                         if (!Event.current.shift) selectedCueList.Clear();
-                        selectedCueList.Add(cueSerialized);
+						selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
                         Event.current.clickCount = 0;
                     }
                     //Debug.Log("SelectedCueCursor:" + selectedCueList.Count);

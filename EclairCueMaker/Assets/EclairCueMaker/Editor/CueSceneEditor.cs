@@ -48,7 +48,7 @@ namespace wararyo.EclairCueMaker
 
         private float timelineTimeMax = 120;
 
-        private List<SerializedProperty> selectedCueList;
+        private List<string> selectedCueList;
         private Vector2 cueIconDragStartedMousePos;
 
         private float timelineSnapSpan = 0.05f;
@@ -112,7 +112,7 @@ namespace wararyo.EclairCueMaker
 
 		void OnCueSceneChanged(){
             cueListSerialized = new SerializedObject(cueScene).FindProperty("cueList");
-            selectedCueList = new List<SerializedProperty>();
+            selectedCueList = new List<string>();
 
             rawList = new ReorderableList(cueListSerialized.serializedObject, cueListSerialized);
             rawList.elementHeight = 38;
@@ -209,7 +209,7 @@ namespace wararyo.EclairCueMaker
                 if (EclairGUILayout.isCueIconDragging)
                 {
                     float delta = (Event.current.mousePosition.x - cueIconDragStartedMousePos.x) * getTimePerPixel(timelineBackGroundRect.width,timelineZoomFactor);
-                    foreach(SerializedProperty cue in selectedCueList)
+                    foreach(string ID in selectedCueList)
                     {
                         //absoluteCueList.Find(x => x.Value.)
                     }

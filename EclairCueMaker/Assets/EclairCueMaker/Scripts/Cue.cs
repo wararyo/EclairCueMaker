@@ -25,10 +25,15 @@ namespace wararyo.EclairCueMaker
 		//ちょっと頭悪い方法だけど…他に思いつかないので…
 		public UnityEngine.Object paramObject;
 
-		public Cue(){
+		//Cueごとに割り当てられる固有のID
+		//Unityのシリアライザの使用によりSerializedPropertyがEqualじゃなくなるからIDにより判定するよ
+		public string UUID;
+
+		public Cue(){ 
+			UUID = GenerageUUID ();
 		}
 
-        public Cue(float time,string gameObjectName,string cueEventID,string parameter,UnityEngine.Object paramObject)
+		public Cue (float time, string gameObjectName, string cueEventID, string parameter, UnityEngine.Object paramObject) : this ()
         {
             this.time = time;
             this.gameObjectName = gameObjectName;
@@ -37,7 +42,8 @@ namespace wararyo.EclairCueMaker
             this.paramObject = paramObject;
         }
 
-		public Cue(Cue copy){
+		public Cue(Cue copy) : this()
+		{
 			time = copy.time;
             gameObjectName = copy.gameObjectName;
             cueEventID = copy.cueEventID;
@@ -110,6 +116,18 @@ namespace wararyo.EclairCueMaker
 			}
             return null;
         }
+
+		public static string GenerageUUID(){
+			/*Guid guid = Guid.NewGuid();
+			StringBuilder sb = new StringBuilder();
+			byte[] bytes = guid.ToByteArray();
+			foreach (Byte b in bytes)
+			{
+				sb.AppendFormat("{0:x2}", b);
+			}
+			return sb.ToString();*/
+			return System.Guid.NewGuid ().ToString ();
+		}
 
     }
 
