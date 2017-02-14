@@ -50,6 +50,7 @@ namespace wararyo.EclairCueMaker
 
         private List<string> selectedCueList;
         private Vector2 cueIconDragStartedMousePos;
+        private bool dragEndFlag = false;
 
         private float timelineSnapSpan = 0.05f;
 
@@ -211,7 +212,10 @@ namespace wararyo.EclairCueMaker
                     float delta = (Event.current.mousePosition.x - cueIconDragStartedMousePos.x) * getTimePerPixel(timelineBackGroundRect.width,timelineZoomFactor);
                     foreach(string ID in selectedCueList)
                     {
-                        //absoluteCueList.Find(x => x.Value.)
+                        var acue = absoluteCueList.Find(x => x.Value.FindPropertyRelative("UUID").stringValue == ID);
+                        int index = absoluteCueList.IndexOf(acue);
+                        absoluteCueList.Remove(acue);
+                        absoluteCueList.Insert(index, new KeyValuePair<float, SerializedProperty>(acue.Key + delta, acue.Value));
                     }
                 }
 
@@ -234,9 +238,11 @@ namespace wararyo.EclairCueMaker
                     if (isSelectionChanged) Repaint();
                     else
                     {
-                        if(Event.current.type == EventType.MouseDown)
+                        if (Event.current.type == EventType.MouseUp)
                         {
-                            if (position.Contains(Event.current.mousePosition))
+                            //Debug.Log("weiwei");
+                            Rect rect = new Rect(0, 0, paneWidth, position.height);
+                            if (rect.Contains(Event.current.mousePosition))
                             {
                                 selectedCueList.Clear();
                                 Repaint();
@@ -245,7 +251,14 @@ namespace wararyo.EclairCueMaker
                     }
                 }
 
-				//cueListSerialized.serializedObject.ApplyModifiedProperties();
+                if (dragEndFlag)
+                {
+                    dragEndFlag = false;
+                    cueScene.cueList = CueListUtil.GenerateCueListFromAbsolute(absoluteCueList);
+                    //cueListSerialized = new SerializedObject(cueScene).FindProperty("cueList");
+
+                    cueListSerialized.serializedObject.ApplyModifiedProperties();
+                }
             }
 
 
@@ -269,6 +282,7 @@ namespace wararyo.EclairCueMaker
         private void OnCueIconDragEnd()
         {
             wantsMouseMove = false;
+            dragEndFlag = true;
         }
 
         /// <summary>

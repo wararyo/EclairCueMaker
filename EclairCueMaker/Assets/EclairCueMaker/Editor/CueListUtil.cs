@@ -19,5 +19,32 @@ namespace wararyo.EclairCueMaker
             }
             return absoluteCueList;
         }
+
+        public static List<Cue> GenerateCueListFromAbsolute(List<KeyValuePair<float,SerializedProperty>> absoluteCueList)
+        {
+            absoluteCueList.Sort((a, b) => CompareFloat(a.Key,b.Key));
+            List<Cue> list = new List<Cue>();
+            foreach(var acue in absoluteCueList)
+            {
+                list.Add(new Cue());
+            }
+            return list;
+        }
+
+        public static int CompareFloat(float a, float b)
+        {
+            if (a > b)
+            {
+                return 1;
+            }
+            else if (a < b)
+            {
+                return -1;
+            }
+            else//a == b
+            {
+                return 0;
+            }
+        }
     }
 }
