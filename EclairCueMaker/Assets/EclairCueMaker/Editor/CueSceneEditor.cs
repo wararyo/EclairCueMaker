@@ -52,7 +52,7 @@ namespace wararyo.EclairCueMaker
         private Vector2 cueIconDragStartedMousePos;
         private bool dragEndFlag = false;
 
-        private float timelineSnapSpan = 0.05f;
+        private float timelineSnapSpan = 0.05f;//タイムラインエディタでドラッグした時の吸着
 
 		const string MessageWhenUnEditable = "GameObjectにCueScenePlayerをアタッチし、CueSceneを指定すると編集できます。";
 
@@ -215,7 +215,7 @@ namespace wararyo.EclairCueMaker
                         var acue = absoluteCueList.Find(x => x.Value.FindPropertyRelative("UUID").stringValue == ID);
                         int index = absoluteCueList.IndexOf(acue);
                         absoluteCueList.Remove(acue);
-                        absoluteCueList.Insert(index, new KeyValuePair<float, SerializedProperty>(acue.Key + delta, acue.Value));
+						absoluteCueList.Insert(index, new KeyValuePair<float, SerializedProperty>((int)((acue.Key + delta + timelineSnapSpan/2)/timelineSnapSpan) * timelineSnapSpan, acue.Value));
                     }
                 }
 
@@ -249,14 +249,22 @@ namespace wararyo.EclairCueMaker
                             }
                         }
                     }
-                }
+                } 
+
+				if (Event.current.type == EventType.MouseUp) {
+					if (EclairGUILayout.isCueIconDragging)
+					{
+						EclairGUILayout.isCueIconDragging = false;
+						EclairGUILayout.CueIconDragEnd();
+					}
+				}
 
                 if (dragEndFlag)
                 {
                     dragEndFlag = false;
+					Undo.RecordObject(this,"Edit CueScene");
                     cueScene.cueList = CueListUtil.GenerateCueListFromAbsolute(absoluteCueList);
                     //cueListSerialized = new SerializedObject(cueScene).FindProperty("cueList");
-
                     cueListSerialized.serializedObject.ApplyModifiedProperties();
                 }
             }
@@ -278,6 +286,9 @@ namespace wararyo.EclairCueMaker
         {
             wantsMouseMove = true;
             cueIconDragStartedMousePos = Event.current.mousePosition;
+			if (Event.current.alt) {
+
+			}
         }
         private void OnCueIconDragEnd()
         {

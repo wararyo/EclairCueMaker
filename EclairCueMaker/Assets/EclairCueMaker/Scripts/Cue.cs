@@ -33,7 +33,8 @@ namespace wararyo.EclairCueMaker
 			UUID = GenerageUUID ();
 		}
 
-		public Cue (float time, string gameObjectName, string cueEventID, string parameter, UnityEngine.Object paramObject) : this ()
+		public Cue (float time, string gameObjectName, string cueEventID, string parameter, UnityEngine.Object paramObject)
+			: this ()
         {
             this.time = time;
             this.gameObjectName = gameObjectName;
@@ -41,6 +42,12 @@ namespace wararyo.EclairCueMaker
             this.parameter = parameter;
             this.paramObject = paramObject;
         }
+
+		public Cue(string UUID, float time, string gameObjectName, string cueEventID, string parameter, UnityEngine.Object paramObject)
+			: this(time,gameObjectName,cueEventID,parameter,paramObject)
+		{
+			this.UUID = UUID;
+		}
 
 		public Cue(Cue copy) : this()
 		{

@@ -24,9 +24,16 @@ namespace wararyo.EclairCueMaker
         {
             absoluteCueList.Sort((a, b) => CompareFloat(a.Key,b.Key));
             List<Cue> list = new List<Cue>();
-            foreach(var acue in absoluteCueList)
+			for(int i=0;i < absoluteCueList.Count;i++)
             {
-                list.Add(new Cue());
+				var cue = absoluteCueList [i].Value;
+				float time = absoluteCueList [i].Key - ((i == 0) ? (0) : (absoluteCueList [i - 1].Key));
+				list.Add(new Cue(cue.FindPropertyRelative("UUID").stringValue,
+					time,
+					cue.FindPropertyRelative("gameObjectName").stringValue,
+					cue.FindPropertyRelative("cueEventID").stringValue,
+					cue.FindPropertyRelative("parameter").stringValue,
+					cue.FindPropertyRelative("paramObject").objectReferenceValue));
             }
             return list;
         }
@@ -43,7 +50,7 @@ namespace wararyo.EclairCueMaker
             }
             else//a == b
             {
-                return 0;
+                return 1;//0にするとドラッグするたびに順番が入れ替わる怪現象が起こる
             }
         }
     }

@@ -189,11 +189,11 @@ namespace wararyo.EclairCueMaker
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
 			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(selected?iconSelectedPath:iconPath));
-            if (Event.current.type == EventType.MouseUp)
+			if (Event.current.type == EventType.MouseUp)
             {
-                if (rect.Contains(Event.current.mousePosition))
+				if (rect.Contains(Event.current.mousePosition) && !isCueIconDragging)
                 {
-                    if (selected)
+					if (selected)
                     {
                         if(Event.current.clickCount == 1)
                         {
@@ -217,17 +217,12 @@ namespace wararyo.EclairCueMaker
                     }
                     else
                     {
+						//Debug.Log ("wowowowow");
                         if (!Event.current.shift) selectedCueList.Clear();
 						selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
                         Event.current.clickCount = 0;
                     }
                     //Debug.Log("SelectedCueCursor:" + selectedCueList.Count);
-                }
-
-                if (isCueIconDragging)
-                {
-                    isCueIconDragging = false;
-                    CueIconDragEnd();
                 }
             }
             else if(Event.current.type == EventType.MouseDrag)
@@ -237,14 +232,14 @@ namespace wararyo.EclairCueMaker
                     if (isCueIconDragging) ;
                     else
                     {
+						if (!selected && !Event.current.shift) {
+							selectedCueList.Clear();
+							selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
+						}
                         isCueIconDragging = true;
                         CueIconDragStart();
                     }
                 }
-            }
-            else if(Event.current.type == EventType.MouseUp)
-            {
-
             }
             return selectedCueList;
         }
