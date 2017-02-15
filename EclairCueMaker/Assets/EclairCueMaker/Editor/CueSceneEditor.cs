@@ -290,8 +290,10 @@ namespace wararyo.EclairCueMaker
 				var beforeSelection = new List<string>(selectedCueList);
 				selectedCueList.Clear ();
 				foreach (string uuid in beforeSelection) {
-					Cue copy = new Cue (cueScene.cueList.Find (x => x.UUID == uuid));
-					cueScene.cueList.Add (copy);
+					Cue cue = cueScene.cueList.Find (x => x.UUID == uuid);
+					int index = cueScene.cueList.IndexOf (cue);
+					Cue copy = new Cue (cue){time = 0};
+					cueScene.cueList.Insert (index+1,copy);
 					selectedCueList.Add (copy.UUID);
 				}
 			}
