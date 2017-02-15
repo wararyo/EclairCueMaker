@@ -23,7 +23,7 @@ MonoBehaviour:
     cueEventID: 897fh6h879t4soioc3rio
     parameter: True
     paramObject: {fileID: 0}
-  - time: 1
+  - time: 0.1
     gameObjectName: Main Camera
     cueEventID: 656f78s8f9d0n97d
     parameter: CutScene1

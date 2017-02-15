@@ -142,7 +142,18 @@ namespace wararyo.EclairCueMaker
 
         #region TimelineTrack
 
-		public static List<KeyValuePair<float, SerializedProperty>> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime)
+		/// <summary>
+		/// Draw Timeline GUI.
+		/// </summary>
+		/// <returns>SelectedCueList.</returns>
+		/// <param name="absoluteCueList">Absolute cue list.</param>
+		/// <param name="gameObjectPath">Game object path.</param>
+		/// <param name="paneWidth">Pane width.</param>
+		/// <param name="isOddRaw">If set to <c>true</c> is odd raw.</param>
+		/// <param name="startTime">Start time.</param>
+		/// <param name="endTime">End time.</param>
+		/// <param name="selectedCueList">Selected cue list.</param>
+		public static List<string> TimelineTrack(List<KeyValuePair<float, SerializedProperty>> absoluteCueList,string gameObjectPath,int paneWidth,bool isOddRaw,float startTime,float endTime,List<string> selectedCueList)
         {
             if (absoluteCueList == null) return null;
             EditorGUILayout.LabelField("");
@@ -157,39 +168,84 @@ namespace wararyo.EclairCueMaker
 				if (acue.Value.FindPropertyRelative("gameObjectName").stringValue.Equals(gameObjectPath))//gameObjectName == gameObjectPathとするより微妙に高速かもしれない
                 {
                     float x = (int)Mathf.LerpUnclamped(paneWidth, rect.width, (acue.Key - startTime) / (endTime - startTime)) - 9;
-					CueIcon(new Rect(x, rect.y + 1, 18, 18), acue.Value);
+					selectedCueList = CueIcon(new Rect(x, rect.y + 1, 18, 18), acue.Value,selectedCueList);
                 }
             }
-            return absoluteCueList;
+            return selectedCueList;
         }
 
         #endregion
 
         #region CueIcon
 
-		public static void CueIcon(Rect rect, SerializedProperty cueSerialized){
+        //実際にドラッグする処理はCueSceneEditorで書くことにしたよ
+        public static System.Action CueIconDragStart;
+        public static System.Action CueIconDragEnd;
+        public static bool isCueIconDragging = false;
+
+		public static List<string> CueIcon(Rect rect, SerializedProperty cueSerialized, List<string> selectedCueList)
+        {
+			bool selected = selectedCueList.Exists(x => x == cueSerialized.FindPropertyRelative("UUID").stringValue);
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
-			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(iconPath));
+			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(selected?iconSelectedPath:iconPath));
 			if (Event.current.type == EventType.MouseDown) {
-				if(rect.Contains(Event.current.mousePosition))
-					PopupWindow.Show (rect, new CuePopupWindow(cueSerialized));
+				if (rect.Contains (Event.current.mousePosition) && selected && Event.current.clickCount == 2) {
+					Event.current.clickCount = 0;
+					selectedCueList.Clear ();
+					selectedCueList.Add (cueSerialized.FindPropertyRelative ("UUID").stringValue);
+					PopupWindow.Show (rect, new CuePopupWindow (cueSerialized));
+				}
 			}
+			else if (Event.current.type == EventType.MouseUp)
+            {
+				if (rect.Contains(Event.current.mousePosition) && !isCueIconDragging)
+                {
+					if (selected)
+                    {
+                        if(Event.current.clickCount == 1)
+                        {
+                            if (Event.current.shift)
+                            {
+								selectedCueList.Remove(selectedCueList.Find(x => x == cueSerialized.FindPropertyRelative("UUID").stringValue));
+                            }
+                            else
+                            {
+                                selectedCueList.Clear();
+								selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
+                            }
+                        }
+                    }
+                    else
+                    {
+						//Debug.Log ("wowowowow");
+                        if (!Event.current.shift) selectedCueList.Clear();
+						selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
+                        Event.current.clickCount = 0;
+                    }
+                    //Debug.Log("SelectedCueCursor:" + selectedCueList.Count);
+                }
+            }
+			else if(Event.current.type == EventType.MouseDrag)
+            {
+                if (rect.Contains(Event.current.mousePosition))
+                {
+					if (!isCueIconDragging && Event.current.delta.magnitude > 1.0f)
+                    {
+						if (!selected && !Event.current.shift) {
+							selectedCueList.Clear();
+							selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
+						}
+                        isCueIconDragging = true;
+                        CueIconDragStart();
+                    }
+                }
+            }
+            return selectedCueList;
         }
 
         #endregion
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 
 	public class CuePopupWindow : PopupWindowContent
