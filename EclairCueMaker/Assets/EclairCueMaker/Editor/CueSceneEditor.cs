@@ -262,7 +262,7 @@ namespace wararyo.EclairCueMaker
                 if (dragEndFlag)
                 {
                     dragEndFlag = false;
-					Undo.RecordObject(this,"Edit CueScene");
+					Undo.RecordObject(cueScene,"Edit CueScene");
                     cueScene.cueList = CueListUtil.GenerateCueListFromAbsolute(absoluteCueList);
                     //cueListSerialized = new SerializedObject(cueScene).FindProperty("cueList");
                     cueListSerialized.serializedObject.ApplyModifiedProperties();
@@ -287,7 +287,13 @@ namespace wararyo.EclairCueMaker
             wantsMouseMove = true;
             cueIconDragStartedMousePos = Event.current.mousePosition;
 			if (Event.current.alt) {
-
+				var beforeSelection = new List<string>(selectedCueList);
+				selectedCueList.Clear ();
+				foreach (string uuid in beforeSelection) {
+					Cue copy = new Cue (cueScene.cueList.Find (x => x.UUID == uuid));
+					cueScene.cueList.Add (copy);
+					selectedCueList.Add (copy.UUID);
+				}
 			}
         }
         private void OnCueIconDragEnd()

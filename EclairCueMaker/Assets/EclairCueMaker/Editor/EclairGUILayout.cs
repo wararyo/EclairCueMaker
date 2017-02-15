@@ -189,7 +189,15 @@ namespace wararyo.EclairCueMaker
 			string iconPath = AssetDatabase.GUIDToAssetPath("fac45307b96430b4e87c05173f3d3986");
 			string iconSelectedPath = AssetDatabase.GUIDToAssetPath("a69cd2e95d5e387429baa8a7821b593c");
 			GUI.DrawTexture(rect, AssetDatabase.LoadAssetAtPath<Texture>(selected?iconSelectedPath:iconPath));
-			if (Event.current.type == EventType.MouseUp)
+			if (Event.current.type == EventType.MouseDown) {
+				if (rect.Contains (Event.current.mousePosition) && selected && Event.current.clickCount == 2) {
+					Event.current.clickCount = 0;
+					selectedCueList.Clear ();
+					selectedCueList.Add (cueSerialized.FindPropertyRelative ("UUID").stringValue);
+					PopupWindow.Show (rect, new CuePopupWindow (cueSerialized));
+				}
+			}
+			else if (Event.current.type == EventType.MouseUp)
             {
 				if (rect.Contains(Event.current.mousePosition) && !isCueIconDragging)
                 {
@@ -207,13 +215,6 @@ namespace wararyo.EclairCueMaker
 								selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
                             }
                         }
-                        else if (Event.current.clickCount == 2)
-                        {
-                            Event.current.clickCount = 0;
-                            if (!Event.current.shift) selectedCueList.Clear();
-							selectedCueList.Add(cueSerialized.FindPropertyRelative("UUID").stringValue);
-                            PopupWindow.Show(rect, new CuePopupWindow(cueSerialized));
-                        }
                     }
                     else
                     {
@@ -225,12 +226,11 @@ namespace wararyo.EclairCueMaker
                     //Debug.Log("SelectedCueCursor:" + selectedCueList.Count);
                 }
             }
-            else if(Event.current.type == EventType.MouseDrag)
+			else if(Event.current.type == EventType.MouseDrag)
             {
                 if (rect.Contains(Event.current.mousePosition))
                 {
-                    if (isCueIconDragging) ;
-                    else
+					if (!isCueIconDragging && Event.current.delta.magnitude > 1.0f)
                     {
 						if (!selected && !Event.current.shift) {
 							selectedCueList.Clear();
