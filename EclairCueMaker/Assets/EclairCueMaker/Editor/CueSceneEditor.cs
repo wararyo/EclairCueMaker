@@ -202,6 +202,19 @@ namespace wararyo.EclairCueMaker
 					}
 				}
 
+
+				//Cueの削除
+				if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.Delete || Event.current.keyCode == KeyCode.Backspace)) {
+					//Debug.Log ("aahahahahahhhahaa");
+					Undo.RecordObject(cueScene,"Delete Cue");
+					foreach (string ID in selectedCueList) {
+						//Debug.Log (ID);
+						var cue = cueScene.cueList.FindIndex(x => x.UUID == ID);
+						Debug.Log (cue);
+						cueScene.cueList.RemoveAt(cue);
+					}
+				}
+
 				cueListSerialized.serializedObject.Update ();
 
                 var absoluteCueList = CueListUtil.GenerateAbsoluteCueList(cueListSerialized);
