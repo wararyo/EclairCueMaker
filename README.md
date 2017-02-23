@@ -1,5 +1,7 @@
 # <img src="Images/IconHiDPI.png" width=48px /> EclairCueMaker
 
+<img src="Images/CueSceneEditorTimeline.png" width="640px" />
+
 ## 概要
 EclairCueMakerは、アニメーション再生などの処理を時間差をつけて実行させることにより、UIアニメーションや、カットシーン作成などを行えるUnity用ツールです。タイムライン上で視覚的に編集することができます。
 
@@ -50,7 +52,6 @@ Createメニュー>EclairCueSceneを選択し、新たなCueSceneファイルを
 さらに`CueScenePlayer`コンポーネント内の"Cue Scene"パラメーターに、先ほど作成したCueSceneをアタッチします。
 
 <img src="Images/CueScenePlayer.png" width="320px" />  
-(Cue Event_Play Cue Sceneについては後ほど説明します。)
 
 Play On Awakeをオンにした場合は、Unityシーンを開いたと同時に`CueScene`の再生を開始します。
 
@@ -111,11 +112,7 @@ EclairCueMakerの要となる、CueSceneEditorの使い方です。
 編集したいCueSceneをCueEventPlayerにセットし、CueEventPlayerがアタッチされているゲームオブジェクトを選択すると、そのCueSceneが編集可能となります。
 
 `CueSceneEditor`には、CueSceneを表示する2つの方法があります。  
-一つがTimeline表示  
-<img src="Images/CueSceneEditorTimeline.png" width="640px" />
-
-もう一つがRaw表示です。  
-<img src="Images/CueSceneExample.png" width="640px" />
+一つがTimeline表示、もう一つがRaw表示です。
 
 ### Timeline表示での編集
 <img src="Images/CueSceneEditorTimeline.png" width="640px" />
@@ -133,6 +130,8 @@ EclairCueMakerの要となる、CueSceneEditorの使い方です。
 Cueをダブルクリックした際に出るウィンドウについては[Raw表示での編集](#raw表示での編集)を参照してください。
 
 ### Raw表示での編集
+<img src="Images/CueSceneExample.png" width="640px" />
+
 CueSceneに含まれているCueが上から下へ時系列で並んでいます。
 右下の + ボタンを押すと、新しいCueを作成します。
 
